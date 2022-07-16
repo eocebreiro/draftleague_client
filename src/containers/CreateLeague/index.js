@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Navagate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createLeague } from "../../state/profile/profileActions";
@@ -29,7 +29,7 @@ const index = ({ createLeague }) => {
     checkSelect: false,
   });
 
-  const { checkLength, checkSelect } = errorData;
+  const { checkLength } = errorData;
 
   let options = [];
   for (let i = 4; i <= 16; i++) {
@@ -44,12 +44,8 @@ const index = ({ createLeague }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     let check = false;
-    if (leaguename.length < 3 || leaguename.length > 30) {
+    if (leaguename.length < 4 || leaguename.length > 30) {
       setErrorData({ ...errorData, checkLength: true });
-      check = true;
-    }
-    if (numOfParticipants === "Number of participants") {
-      setErrorData({ ...errorData, checkSelect: true });
       check = true;
     }
     if (!check) {
@@ -80,13 +76,22 @@ const index = ({ createLeague }) => {
                 maxLength="30"
                 autoComplete="off"
                 noValidate
+                error={checkLength}
               />
+              <Error error={checkLength}>
+                *League name must be at least 4 and 30 characters
+              </Error>
             </FormGroup>
             <FormGroup>
-              <P>
+              <P size="lead">
                 Number of participants{" "}
                 {
-                  <select onChange={(e) => onChange(e)} required>
+                  <select
+                    name="numOfParticipants"
+                    value={numOfParticipants}
+                    onChange={(e) => onChange(e)}
+                    required
+                  >
                     {dropdownItems}
                   </select>
                 }

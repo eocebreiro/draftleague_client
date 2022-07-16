@@ -56,7 +56,7 @@ const index = ({ register, isAuthenticated }) => {
       testName,
       testPassword2,
       isError = false;
-    if (name === "") {
+    if (name.length < 4 || name.length > 30) {
       testName = true;
       isError = true;
     }
@@ -123,7 +123,9 @@ const index = ({ register, isAuthenticated }) => {
                     noValidate
                     error={isNameMissing}
                   />
-                  <Error error={isNameMissing}>*Name field is required</Error>
+                  <Error error={isNameMissing}>
+                    *Name must be at least 4 and 30 characters
+                  </Error>
                 </FormGroup>
                 <FormGroup>
                   <Input

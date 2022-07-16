@@ -11,6 +11,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./containers/Dashboard";
 import EditProfile from "./containers/EditProfile";
 import CreateLeague from "./containers/CreateLeague";
+import JoinLeague from "./containers/JoinLeague";
 
 //Redux
 import { Provider } from "react-redux";
@@ -51,6 +52,11 @@ const App = () => {
             exact
             path="/create-league"
             element={<PrivateRoute component={CreateLeague} />}
+          />
+          <Route
+            exact
+            path="/join-league"
+            element={<PrivateRoute component={JoinLeague} />}
           />
         </Routes>
       </Router>

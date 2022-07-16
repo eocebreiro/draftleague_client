@@ -51,6 +51,7 @@ export const createLeague = (formData) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
+    console.log(formData);
 
     const res = await axios.post("/api/profile/createleague", formData, config);
     dispatch({

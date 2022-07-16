@@ -60,7 +60,9 @@ const index = ({ createProfile }) => {
                 noValidate
                 error={isError}
               />
-              <Error error={isError}>*Team name field is required</Error>
+              <Error error={isError}>
+                *Team name must be at least 4 and 30 characters
+              </Error>
               <P size="S">This can be edited later.</P>
             </FormGroup>
             <Input
