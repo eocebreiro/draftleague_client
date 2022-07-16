@@ -33,9 +33,8 @@ const index = ({ createLeague }) => {
 
   let options = [];
   for (let i = 4; i <= 16; i++) {
-    options.push(<option value={i}>{i}</option>);
+    options.push(<option key={i}>{i}</option>);
   }
-  const [dropdownItems, setDropDownItems] = useState(options);
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -92,7 +91,7 @@ const index = ({ createLeague }) => {
                     onChange={(e) => onChange(e)}
                     required
                   >
-                    {dropdownItems}
+                    {options}
                   </select>
                 }
               </P>

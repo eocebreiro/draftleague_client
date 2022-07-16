@@ -13,7 +13,6 @@ import FormGroup from "../../components/FormItems/FormGroup";
 import Input from "../../components/FormItems/Input";
 import Error from "../../components/FormItems/Error";
 import Button from "../../components/Button";
-import P from "../../components/P";
 
 const index = ({ joinLeague }) => {
   const navigate = useNavigate();
