@@ -12,15 +12,19 @@ export const handleColorType = (color) => {
     case "success":
       return "#28a745";
     default:
-      return "none";
+      return color;
   }
 };
 
-export const handleMarginType = (margin) => {
+export const handleAlignmentType = (align) => {
   //Desktop
-  switch (margin) {
+  switch (align) {
     case "center":
       return "auto";
+    case "left":
+      return "auto auto auto 0";
+    case "right":
+      return "auto 0 auto auto;";
     default:
       return "0";
   }
@@ -55,5 +59,17 @@ export const handleMediaSizeType = (size) => {
       return ".75rem";
     default:
       return "1rem";
+  }
+};
+
+export const handlePaddingType = (padding) => {
+  //Media
+  switch (padding) {
+    case "signup":
+      return 10;
+    case "login":
+      return 10;
+    default:
+      return 3;
   }
 };

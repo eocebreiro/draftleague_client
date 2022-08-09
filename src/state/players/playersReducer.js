@@ -1,13 +1,14 @@
 import {
-  CLEAR_PROFILE,
-  GET_PROFILE,
-  PROFILE_ERROR,
-  UPDATE_PROFILE,
-  PROFILE_LOADING,
+  GET_NEWPLAYERS,
+  CLEAR_NEWPLAYERS,
+  NEWPLAYERS_ERROR,
+  GET_PLAYERS,
+  PLAYERS_ERROR,
+  CLEAR_PLAYERS,
 } from "../types";
 
 const initialState = {
-  profile: null,
+  players: null,
   loading: true,
   error: {},
 };
@@ -16,28 +17,28 @@ export default function(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case GET_PROFILE:
-    case UPDATE_PROFILE:
+    case GET_NEWPLAYERS:
+    case GET_PLAYERS:
       return {
         ...state,
-        profile: payload,
+        players: payload,
         loading: false,
       };
-    case PROFILE_ERROR:
+
+    case NEWPLAYERS_ERROR:
+    case PLAYERS_ERROR:
       return {
         ...state,
-        profile: null,
         error: payload,
         loading: false,
       };
-    case CLEAR_PROFILE:
+    case CLEAR_NEWPLAYERS:
+    case CLEAR_PLAYERS:
       return {
         ...state,
-        profile: null,
+        players: null,
         loading: false,
       };
-    case PROFILE_LOADING:
-      return { ...state, loading: true };
     default:
       return state;
   }

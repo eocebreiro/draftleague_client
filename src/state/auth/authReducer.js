@@ -6,6 +6,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  AUTH_LOADING,
 } from "../types";
 
 const initialState = {
@@ -47,6 +48,8 @@ function authReducer(state = initialState, action) {
         isAuthenticated: false,
         loading: false,
       };
+    case AUTH_LOADING:
+      return { ...state, loading: true };
     default:
       return state;
   }

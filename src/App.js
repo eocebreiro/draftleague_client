@@ -2,16 +2,18 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import GlobalStyle from "./components/GlobalStyle";
-
-import Navbar from "./containers/Navbar";
-import Landing from "./containers/Landing";
-import Register from "./containers/Register";
-import Login from "./containers/Login";
 import PrivateRoute from "./components/PrivateRoute";
-import Dashboard from "./containers/Dashboard";
-import EditProfile from "./containers/EditProfile";
-import CreateLeague from "./containers/CreateLeague";
-import JoinLeague from "./containers/JoinLeague";
+import Navbar from "./pages/Navbar";
+import Landing from "./pages/Landing";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import EditProfile from "./pages/EditProfile";
+import CreateLeague from "./pages/CreateLeague";
+import JoinLeague from "./pages/JoinLeague";
+import League from "./pages/League";
+import Player from "./pages/Player";
+import LeagueFixture from "./pages/LeagueFixture";
 
 //Redux
 import { Provider } from "react-redux";
@@ -26,7 +28,6 @@ if (localStorage.token) {
 const App = () => {
   useEffect(() => {
     store.dispatch(loadUser());
-    console.log("test");
   }, []);
   return (
     <Provider store={store}>
@@ -34,10 +35,10 @@ const App = () => {
         <GlobalStyle />
         <Navbar />
         <Routes>
-          <Route exact path="/" element={<Landing />} />
           <Route exact path="/about" />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/player/:id/" element={<Player />} />
           <Route
             exact
             path="/dashboard"
@@ -58,6 +59,17 @@ const App = () => {
             path="/join-league"
             element={<PrivateRoute component={JoinLeague} />}
           />
+          <Route
+            exact
+            path="/league/:id/*"
+            element={<PrivateRoute component={League} />}
+          />
+          <Route
+            exact
+            path="/league/:id/schedule/:fixture_id"
+            element={<PrivateRoute component={LeagueFixture} />}
+          />
+          <Route exact path="/" element={<Landing />} />
         </Routes>
       </Router>
     </Provider>

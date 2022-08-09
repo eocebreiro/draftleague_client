@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import StyledLink from "./StyledLink";
 import StyledButton from "./StyledButton";
 
-function Button(props) {
+export const Button = (props) => {
   // Render an anchor tag (Link)
   let button = (
     <StyledLink
@@ -33,7 +33,7 @@ function Button(props) {
   }
 
   return <Fragment>{button}</Fragment>;
-}
+};
 
 Button.propTypes = {
   handleRoute: PropTypes.func,
@@ -41,5 +41,3 @@ Button.propTypes = {
   onClick: PropTypes.func,
   children: PropTypes.node.isRequired,
 };
-
-export default Button;

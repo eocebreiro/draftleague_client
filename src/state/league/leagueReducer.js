@@ -1,13 +1,12 @@
 import {
-  CLEAR_PROFILE,
-  GET_PROFILE,
-  PROFILE_ERROR,
-  UPDATE_PROFILE,
-  PROFILE_LOADING,
+  GET_LEAGUE,
+  LEAGUE_ERROR,
+  CLEAR_LEAGUE,
+  UPDATE_LEAGUE,
 } from "../types";
 
 const initialState = {
-  profile: null,
+  league: null,
   loading: true,
   error: {},
 };
@@ -16,28 +15,25 @@ export default function(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case GET_PROFILE:
-    case UPDATE_PROFILE:
+    case GET_LEAGUE:
+    case UPDATE_LEAGUE:
       return {
         ...state,
-        profile: payload,
+        league: payload,
         loading: false,
       };
-    case PROFILE_ERROR:
+    case LEAGUE_ERROR:
       return {
         ...state,
-        profile: null,
         error: payload,
         loading: false,
       };
-    case CLEAR_PROFILE:
+    case CLEAR_LEAGUE:
       return {
         ...state,
-        profile: null,
+        league: null,
         loading: false,
       };
-    case PROFILE_LOADING:
-      return { ...state, loading: true };
     default:
       return state;
   }

@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.6;
     background-color: #fff;
     color: #333;
+    width: 100%;
   }
   
   a {
@@ -23,7 +24,8 @@ const GlobalStyle = createGlobalStyle`
  
   
   img {
-    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
   }
 `;
 

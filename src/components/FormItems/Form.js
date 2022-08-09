@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { handleMarginType } from "../utils/handleType";
+import { handleAlignmentType } from "../utils/handleType";
 
 const Form = styled.form`
   display: block;
   margin-top: 0em;
   padding: 0.5rem;
-  margin: ${(props) => handleMarginType(props.margin)};
+  margin: ${(props) => handleAlignmentType(props.align)};
   margin-bottom: 1rem;
   max-width: 500px;
 `;
