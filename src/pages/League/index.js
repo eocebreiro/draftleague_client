@@ -8,6 +8,7 @@ import {
   useParams,
 } from "react-router-dom";
 import { getLeague } from "../../state/league/leagueActions";
+import { checkRostersLock } from "../../state/league/leagueActions";
 
 //Styling Components
 import Spinner from "../../components/Spinner";
@@ -25,11 +26,20 @@ import Waviers from "../../containers/Waviers";
 import Logs from "../../containers/Logs";
 import PlayerList from "../../containers/PlayerList";
 
-const index = ({ auth: { user }, getLeague, league: { league, loading } }) => {
+const index = ({
+  auth: { user },
+  getLeague,
+  checkRostersLock,
+  league: { league, loading },
+}) => {
   const { id } = useParams();
   useEffect(() => {
     getLeague(id);
   }, []);
+
+  const onClick = async (e) => {
+    checkRostersLock(league._id);
+  };
 
   const params = useParams();
   return (
@@ -51,7 +61,11 @@ const index = ({ auth: { user }, getLeague, league: { league, loading } }) => {
             <Button link={"/league/" + id + "/schedule"} color="primary">
               Schedule
             </Button>
-            <Button link={"/league/" + id + "/rosters"} color="primary">
+            <Button
+              link={"/league/" + id + "/rosters"}
+              color="primary"
+              onClick={(e) => onClick(e)}
+            >
               Rosters
             </Button>
             <Button link={"/league/" + id + "/waviers"} color="primary">
@@ -72,10 +86,18 @@ const index = ({ auth: { user }, getLeague, league: { league, loading } }) => {
               path={"/schedule"}
               element={<Schedule league={league} />}
             />
-            <Route exact path={"/rosters"} element={<Rosters />} />
+            <Route
+              exact
+              path={"/rosters"}
+              element={<Rosters league={league} />}
+            />
             <Route exact path={"/waviers"} element={<Waviers />} />
             <Route exact path={"/logs"} element={<Logs />} />
-            <Route exact path={"/player-list"} element={<PlayerList />} />
+            <Route
+              exact
+              path={"/player-list"}
+              element={<PlayerList league={league} />}
+            />
           </Routes>
         </Container>
       )}
@@ -85,10 +107,11 @@ const index = ({ auth: { user }, getLeague, league: { league, loading } }) => {
 
 index.propTypes = {
   getLeague: PropTypes.func.isRequired,
+  checkRostersLock: PropTypes.func.isRequired,
   league: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({ league: state.league, auth: state.auth });
 
-export default connect(mapStateToProps, { getLeague })(index);
+export default connect(mapStateToProps, { getLeague, checkRostersLock })(index);
