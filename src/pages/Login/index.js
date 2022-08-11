@@ -114,7 +114,6 @@ const index = ({ login, isAuthenticated }) => {
                 link="/login"
                 color="primary"
                 width="100%"
-                type="button"
               >
                 Submit
               </Button>
