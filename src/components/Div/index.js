@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import showcase from "../../img/showcase.jpg";
+import soccerfield from "../../img/soccerfield.jpg";
 
 export const Container = styled.div`
   margin: auto;
@@ -9,7 +10,7 @@ export const Container = styled.div`
   padding-left: 3rem;
   padding-right: 3rem;
   min-height: 95vh;
-  max-width: 1200px;
+  max-width: 1400px;
 
   @media (max-width: 1200px) {
     max-width: 1140px;
@@ -84,6 +85,88 @@ export const LandingImg = styled.div`
   margin-top: -50px;
   margin-bottom: 0px;
 `;
+
+// Mostly used in overview
+
+export const OverviewContent = styled.div`
+  display: grid;
+`;
+
+export const FieldImg = styled.div`
+  position: relative;
+  background: url(${soccerfield}) no-repeat center center/cover;
+  width: 100%;
+  max-width: 900px;
+  height: 800px;
+  border: 2px solid red;
+  margin-right: 10px;
+`;
+export const FieldContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  border: 2px solid red;
+  height: 800px;
+`;
+
+export const PlayerWrapper = styled.div`
+  position: relative;
+  border: 2px solid green;
+  width: 150px;
+  height: 150px;
+  margin: 10px;
+`;
+export const RosterContent = styled.div`
+  position: relative;
+  min-width: 300px;
+  height: 800px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+`;
+
+export const RosterRow = styled.div`
+  display: flex;
+  max-width: 100%;
+  justify-content: space-between;
+  padding: 10px;
+`;
+
+export const RosterItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 100%;
+`;
+
+export const RosterHeader = styled(RosterItem)`
+  color: white;
+  font-weight: 700;
+`;
+
+export const RosterRowHeader = styled(RosterRow)`
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const MainRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: center;
+  justify-content: space-evenly;
+`;
+
+export const MainCol = styled.div`
+  width: 100%;
+`;
+
+// -----------
 
 export const Div = styled.div`
   position: relative;
