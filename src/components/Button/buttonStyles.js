@@ -22,8 +22,13 @@ const buttonStyles = css`
   outline: none;
   color: ${(props) => (props.color === "light" ? "#333" : "#fff")};
   background: ${(props) => handleColorType(props.color)};
-  &:hover {
+  &:hover:not([disabled]) {
     opacity: 0.8;
+  }
+  &:disabled {
+    border: 1px solid #999999;
+    background-color: transparent;
+    color: #666666;
   }
 `;
 

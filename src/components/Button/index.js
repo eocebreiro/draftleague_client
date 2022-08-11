@@ -7,9 +7,15 @@ import StyledButton from "./StyledButton";
 
 export const Button = (props) => {
   // Render an anchor tag (Link)
-  let button = (
+  let button;
+  let link = "";
+  if (props.link) {
+    link = props.link;
+  }
+
+  button = (
     <StyledLink
-      to={props.link}
+      to={link}
       onClick={props.onClick}
       color={props.color}
       width={props.width}
@@ -19,13 +25,13 @@ export const Button = (props) => {
   );
 
   // If the Button has a handleRoute prop, we want to render a button
-  if (props.handleRoute) {
+  if (props.type === "button") {
     button = (
       <StyledButton
-        onClick={props.handleRoute}
+        onClick={props.onClick}
         color={props.color}
         width={props.width}
-        type={props.type}
+        disabled={props.disabled}
       >
         {Children.toArray(props.children)}
       </StyledButton>
