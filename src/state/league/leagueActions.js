@@ -6,6 +6,10 @@ import {
   LEAGUE_ERROR,
   CLEAR_LEAGUE,
   UPDATE_LEAGUE,
+  ADD_PLAYER_SUCCESS,
+  ADD_PLAYER_FAIL,
+  DROP_PLAYER_SUCCESS,
+  DROP_PLAYER_FAIL,
 } from "../types";
 
 //Get leagues by league ID
@@ -64,5 +68,74 @@ export const joinLeague = (formData) => async (dispatch) => {
     });
   } catch (err) {
     //TODO lecture 48 time 5min 30 seconds
+  }
+};
+
+// Add player to team in a league
+export const addPlayer = ({ league_id, player_id }) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify({ league_id });
+
+  try {
+    const res = await axios.post(
+      `/api/league/player/add/${player_id}`,
+      body,
+      config
+    );
+    dispatch({
+      type: ADD_PLAYER_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADD_PLAYER_FAIL,
+    });
+  }
+};
+
+// Add player to team in a league
+export const dropPlayer = ({ league_id, player_id }) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify({ league_id });
+
+  try {
+    const res = await axios.post(
+      `/api/league/player/drop/${player_id}`,
+      body,
+      config
+    );
+    dispatch({
+      type: DROP_PLAYER_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DROP_PLAYER_FAIL,
+    });
+  }
+};
+
+// Check to see if players are locked in a league
+export const checkRostersLock = (league_id) => async (dispatch) => {
+  try {
+    console.log("test");
+    const res = await axios.get(`/api/league/rosters/lock/check`, {
+      params: { league_id: league_id },
+    });
+    dispatch({ type: UPDATE_LEAGUE, payload: res.data });
+  } catch (error) {
+    dispatch({
+      type: LEAGUE_ERROR,
+    });
   }
 };
