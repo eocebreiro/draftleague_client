@@ -98,7 +98,7 @@ const index = ({ dropPlayer, league, auth: { user } }) => {
                 >
                   <img src={player.image_path} />
                 </div>
-                {player.common_name}
+                {player.display_name}
               </Link>
             </TableItem>
             <TableItem style={{ width: widthItem }}>

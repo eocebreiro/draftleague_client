@@ -26,7 +26,7 @@ const index = ({ player }) => {
     <Fragment>
       <Row>
         <Col>
-          <H1 size="L">{player.common_name}</H1>
+          <H1 size="L">{player.display_name}</H1>
           <Row>
             <img src={player.image_path} />
             <img src={player.team.logo_path} />
