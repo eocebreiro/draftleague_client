@@ -25,6 +25,7 @@ import Rosters from "../../containers/Rosters";
 import Waviers from "../../containers/Waviers";
 import Logs from "../../containers/Logs";
 import PlayerList from "../../containers/PlayerList";
+import NewPlayerList from "../../containers/NewPlayerList";
 
 const index = ({
   auth: { user },
@@ -71,6 +72,9 @@ const index = ({
             <Button link={"/league/" + id + "/waviers"} color="primary">
               Waivers
             </Button>
+            <Button link={"/league/" + id + "/new-player-list"} color="primary">
+              New Players
+            </Button>
             <Button link={"/league/" + id + "/player-list"} color="primary">
               Players
             </Button>
@@ -93,6 +97,11 @@ const index = ({
             />
             <Route exact path={"/waviers"} element={<Waviers />} />
             <Route exact path={"/logs"} element={<Logs />} />
+            <Route
+              exact
+              path={"/new-player-list"}
+              element={<NewPlayerList league={league} />}
+            />
             <Route
               exact
               path={"/player-list"}
