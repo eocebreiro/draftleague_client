@@ -2,48 +2,91 @@ import React, { Fragment, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getNewPlayers } from "../../state/players/playersActions";
 
-import NewPlayers from "./NewPlayers";
 import Spinner from "../../components/Spinner";
+import { PlayerRoster } from "./PlayerRoster";
+import {
+  OverviewContent,
+  FieldImg,
+  FieldContent,
+  PlayerWrapper,
+  RosterContent,
+  RosterRow,
+  RosterItem,
+  MainCOl,
+  MainRow,
+  RosterHeader,
+  RosterRowHeader,
+} from "../../components/Div";
 
-const index = ({
-  auth,
-  getNewPlayers,
-  players,
-  leagues: { league, loading },
-}) => {
-  useEffect(() => {
-    getNewPlayers();
-  }, []);
+const index = ({ auth: { user }, players, leagues: { league, loading } }) => {
+  let userData = [];
+  let roster = [];
 
-  return loading ||
-    players.loading ||
-    players.players === null ||
-    league === null ? (
+  // Get the user's data such as teamname and roster (array)
+  for (let i = 0; i < league.participants.length; i++) {
+    if (user._id === league.participants[i].user) {
+      userData = league.participants[i];
+      break;
+    }
+  }
+  let color = "white";
+
+  for (let i = 0; i < userData.team.length; i++) {
+    switch (color) {
+      case "#CCCCCC":
+        color = "white";
+        break;
+      case "white":
+        color = "#CCCCCC";
+        break;
+    }
+    roster.push(<PlayerRoster player={userData.team[i]} />);
+  }
+
+  return loading || players === null ? (
     <Spinner />
   ) : (
     <Fragment>
-      {league.activeWeek ? (
-        <NewPlayers players={players.players} />
-      ) : league.draftComplete ? (
-        "Week in progress: Your games will start next week"
-      ) : league.participantsFull ? (
-        "Draft in progress"
-      ) : (
-        "League not full. " +
-        league.participants.length +
-        "/" +
-        league.numOfParticipants +
-        " players. Have your friends join. League code: " +
-        league.leagueId
-      )}
+      <MainRow>
+        <FieldImg>
+          <FieldContent>
+            <MainRow>
+              <PlayerWrapper />
+            </MainRow>
+            <MainRow>
+              <PlayerWrapper />
+              <PlayerWrapper />
+              <PlayerWrapper />
+              <PlayerWrapper />
+              <PlayerWrapper />
+            </MainRow>
+            <MainRow>
+              <PlayerWrapper />
+              <PlayerWrapper />
+              <PlayerWrapper />
+              <PlayerWrapper />
+              <PlayerWrapper />
+            </MainRow>
+            <MainRow>
+              <PlayerWrapper />
+              <PlayerWrapper />
+              <PlayerWrapper />
+            </MainRow>
+          </FieldContent>
+        </FieldImg>
+        <RosterContent>
+          <RosterRowHeader>
+            <RosterHeader>Roster</RosterHeader>
+          </RosterRowHeader>
+          {roster}
+        </RosterContent>
+      </MainRow>
     </Fragment>
   );
 };
 
 index.propTypes = {
-  getNewPlayers: PropTypes.func.isRequired,
   players: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
@@ -54,4 +97,4 @@ const mapStateToProps = (state) => ({
   leagues: state.league,
 });
 
-export default connect(mapStateToProps, { getNewPlayers })(index);
+export default connect(mapStateToProps, {})(index);
