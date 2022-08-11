@@ -20,9 +20,10 @@ const index = ({ createLeague }) => {
   const [formData, setFormData] = useState({
     leaguename: "",
     numOfParticipants: "8",
+    numOfPlayers: "11",
   });
 
-  const { leaguename, numOfParticipants } = formData;
+  const { leaguename, numOfParticipants, numOfPlayers } = formData;
 
   const [errorData, setErrorData] = useState({
     checkLength: false,
@@ -31,13 +32,16 @@ const index = ({ createLeague }) => {
 
   const { checkLength } = errorData;
 
-  let options = [];
-  let value = [8, 10, 12, 14, 16, 18, 20];
-
+  let partOptions = [];
   for (let i = 8; i <= 20; i++) {
     if (i % 2 == 0) {
-      options.push(<option key={i}>{i}</option>);
+      partOptions.push(<option key={i}>{i}</option>);
     }
+  }
+
+  let playerOptions = [];
+  for (let i = 11; i <= 20; i++) {
+    playerOptions.push(<option key={i}>{i}</option>);
   }
 
   const onChange = (e) => {
@@ -87,15 +91,32 @@ const index = ({ createLeague }) => {
             </FormGroup>
             <FormGroup>
               <P size="lead">
-                Number of participants{" "}
+                Number of participants
                 {
                   <select
                     name="numOfParticipants"
                     value={numOfParticipants}
                     onChange={(e) => onChange(e)}
                     required
+                    style={{ width: "50px", fontSize: "18px", margin: "10px" }}
                   >
-                    {options}
+                    {partOptions}
+                  </select>
+                }
+              </P>
+            </FormGroup>
+            <FormGroup>
+              <P size="lead">
+                Number of players per team
+                {
+                  <select
+                    name="numOfPlayers"
+                    value={numOfPlayers}
+                    onChange={(e) => onChange(e)}
+                    required
+                    style={{ width: "50px", fontSize: "18px", margin: "10px" }}
+                  >
+                    {playerOptions}
                   </select>
                 }
               </P>
