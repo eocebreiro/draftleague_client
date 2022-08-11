@@ -8,7 +8,7 @@ import { getTeamNames } from "../../utils/getTeamNames";
 import Spinner from "../../components/Spinner";
 import PlayerTable from "./PlayerTable";
 
-const index = ({ getPlayers, players: { players, loading } }) => {
+const index = ({ league, getPlayers, players: { players, loading } }) => {
   const [data, setData] = useState({
     team: "All Clubs",
     position: "All Positions",
@@ -78,6 +78,7 @@ const index = ({ getPlayers, players: { players, loading } }) => {
         players={players}
         position={position}
         team={team}
+        league={league}
       ></PlayerTable>
     </Fragment>
   );
