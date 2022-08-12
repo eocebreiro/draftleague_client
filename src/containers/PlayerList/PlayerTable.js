@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { addPlayer } from "../../state/league/leagueActions";
+import { addPlayer } from "../../state/players/playersActions";
 
 //Styling Components
 import P from "../../components/P";
@@ -16,7 +16,13 @@ import {
 } from "../../components/Table";
 import { Button } from "../../components/Button";
 
-const PlayerTable = ({ addPlayer, league, players, team, position }) => {
+const PlayerTable = ({
+  addPlayer,
+  league: { league },
+  players: { players },
+  team,
+  position,
+}) => {
   // size of items in table
   let widthItem = "75px";
 
@@ -69,13 +75,18 @@ const PlayerTable = ({ addPlayer, league, players, team, position }) => {
     }
 
     // Check to see if player is taken
-    let found = false;
-    let owner = null;
-    for (let i = 0; i < league.participants.length; i++) {
-      for (let j = 0; j < league.participants[i].team.length; j++) {
-        if (player.player_id == league.participants[i].team[j].player_id) {
-          found = true;
-          owner = league.participants[i].teamname;
+    let ownerId = null;
+    let ownerName = null;
+    for (let i = 0; i < player.ownership.length; i++) {
+      if (player.ownership[i].league_id === league._id) {
+        ownerId = player.ownership[i].user_id;
+      }
+    }
+
+    if (ownerId) {
+      for (let i = 0; i < league.participants.length; i++) {
+        if (ownerId === league.participants[i].user) {
+          ownerName = league.participants[i].teamname;
         }
       }
     }
@@ -107,8 +118,8 @@ const PlayerTable = ({ addPlayer, league, players, team, position }) => {
           {player.lock ? "Locked" : "Available"}
         </TableItem>
         <TableItem style={{ width: widthItem }}>
-          {found ? (
-            <span>{owner}</span>
+          {!league.participantsFull ? null : !league.draftComplete ? null : ownerName ? (
+            <span>{ownerName}</span>
           ) : (
             <Button
               onClick={(e) => onClick(player.player_id, e)}
@@ -124,6 +135,7 @@ const PlayerTable = ({ addPlayer, league, players, team, position }) => {
       </TableRow>
     );
   });
+
   return (
     <Table>
       <TableRowHeader>
@@ -141,7 +153,14 @@ const PlayerTable = ({ addPlayer, league, players, team, position }) => {
 
 PlayerTable.propTypes = {
   addPlayer: PropTypes.func.isRequired,
-  players: PropTypes.array.isRequired,
+  players: PropTypes.object.isRequired,
+  league: PropTypes.object.isRequired,
 };
 
-export default connect(null, { addPlayer })(PlayerTable);
+const mapStateToProps = (state) => ({
+  players: state.players,
+  league: state.league,
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { addPlayer })(PlayerTable);

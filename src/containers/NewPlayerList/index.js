@@ -16,7 +16,31 @@ import {
   TableHeader,
   TableRowHeader,
 } from "../../components/Table";
-const index = ({ league, getNewPlayers, players: { players, loading } }) => {
+const index = ({
+  league: { league },
+  getNewPlayers,
+  players: { players, loading },
+}) => {
+  // Check to see if league is full
+  if (!league.participantsFull) {
+    return (
+      <Fragment>
+        {"League not full. " +
+          league.participants.length +
+          "/" +
+          league.numOfParticipants +
+          " players. Have your friends join. League code: " +
+          league.leagueId}
+      </Fragment>
+    );
+  }
+  // Check to see if draft is complete
+  if (!league.draftComplete) {
+    return (
+      <Fragment>Draft in progress. Come back after draft is complete.</Fragment>
+    );
+  }
+
   const [data, setData] = useState({
     team: "All Clubs",
     position: "All Positions",
@@ -203,11 +227,13 @@ const index = ({ league, getNewPlayers, players: { players, loading } }) => {
 index.propTypes = {
   getNewPlayers: PropTypes.func.isRequired,
   players: PropTypes.object.isRequired,
+  league: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   players: state.players,
+  league: state.league,
   auth: state.auth,
 });
 

@@ -8,7 +8,11 @@ import { getTeamNames } from "../../utils/getTeamNames";
 import Spinner from "../../components/Spinner";
 import PlayerTable from "./PlayerTable";
 
-const index = ({ league, getPlayers, players: { players, loading } }) => {
+const index = ({
+  league: { league },
+  getPlayers,
+  players: { players, loading },
+}) => {
   const [data, setData] = useState({
     team: "All Clubs",
     position: "All Positions",
@@ -75,7 +79,6 @@ const index = ({ league, getPlayers, players: { players, loading } }) => {
         {teamOptions}
       </select>
       <PlayerTable
-        players={players}
         position={position}
         team={team}
         league={league}
@@ -87,11 +90,13 @@ const index = ({ league, getPlayers, players: { players, loading } }) => {
 index.propTypes = {
   getPlayers: PropTypes.func.isRequired,
   players: PropTypes.object.isRequired,
+  league: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   players: state.players,
+  league: state.league,
   auth: state.auth,
 });
 

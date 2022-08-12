@@ -13,6 +13,8 @@ import {
   PROFILE_LOADING,
   CLEAR_LEAGUE,
   CLEAR_PLAYERS,
+  CLEAR_PLAYER,
+  CLEAR_ROSTER,
 } from "../types";
 
 // Load User
@@ -91,5 +93,7 @@ export const logout = () => (dispatch) => {
   dispatch({ type: CLEAR_PROFILE });
   dispatch({ type: CLEAR_LEAGUE });
   dispatch({ type: CLEAR_PLAYERS });
+  dispatch({ type: CLEAR_PLAYER });
+  dispatch({ type: CLEAR_ROSTER });
   dispatch({ type: LOGOUT });
 };

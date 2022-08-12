@@ -13,7 +13,7 @@ import {
   TableRowHeader,
 } from "../../components/Table";
 
-const index = ({ league, auth: { user } }) => {
+const index = ({ league: { league }, auth: { user } }) => {
   let widthItem = "50px";
   let color = "white";
 
@@ -114,6 +114,7 @@ index.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  league: state.league,
   auth: state.auth,
 });
 

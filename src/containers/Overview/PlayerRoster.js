@@ -24,7 +24,7 @@ export const PlayerRoster = ({ player }) => {
       </RosterItem>
       <RosterItem>
         <span>{player.display_name}</span>
-        <span>{player.position.toUpperCase()}</span>
+        <span>{player.position}</span>
         <span>{player.team.short_code}</span>
       </RosterItem>
       <RosterItem>
