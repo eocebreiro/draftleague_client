@@ -8,9 +8,6 @@ import {
   GET_PLAYERS,
   CLEAR_PLAYERS,
   PLAYERS_ERROR,
-  GET_PLAYER,
-  PLAYER_ERROR,
-  CLEAR_PLAYER,
 } from "../types";
 
 //Get new players list
@@ -49,6 +46,54 @@ export const getPlayers = () => async (dispatch) => {
     dispatch({
       type: PLAYERS_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+//Get a user roster list // MAYBE DELETE
+export const getRoster = (league_id, player_id) => async (dispatch) => {
+  dispatch({
+    type: CLEAR_PLAYERS,
+  });
+  console.log(player_id);
+  try {
+    const res = await axios.get(`/api/league/${league_id}/roster/${player_id}`);
+
+    dispatch({
+      type: GET_PLAYERS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PLAYERS_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Add player to team in a league
+export const addPlayer = ({ league_id, player_id }) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify({ league_id });
+
+  try {
+    const res = await axios.post(
+      `/api/league/player/add/${player_id}`,
+      body,
+      config
+    );
+    dispatch({
+      type: GET_PLAYERS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PLAYERS_ERROR,
     });
   }
 };
