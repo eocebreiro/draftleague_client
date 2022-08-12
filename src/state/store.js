@@ -8,6 +8,7 @@ import profileReducer from "./profile/profileReducer";
 import leagueReducer from "./league/leagueReducer";
 import playersReducer from "./players/playersReducer";
 import playerReducer from "./player/playerReducer";
+import rosterReducer from "./roster/rosterReducer";
 
 const preloadedState = {};
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   league: leagueReducer,
   players: playersReducer,
   player: playerReducer,
+  roster: rosterReducer,
 });
 
 const store = configureStore({
