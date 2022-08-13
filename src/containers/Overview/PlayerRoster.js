@@ -1,5 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
+import { addToLineup } from "../../state/league/leagueActions";
 
 //Font Awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,14 +13,14 @@ import P from "../../components/P";
 import { RosterRow, RosterItem } from "../../components/Div";
 import { Button } from "../../components/Button";
 
-export const PlayerRoster = ({ player }) => {
-  const [show, setShow] = useState(true);
+const PlayerRoster = ({ player, addToLineup }) => {
+  const { id } = useParams();
 
   const onClick = async (e) => {
-    setShow(false);
+    await addToLineup(id, player.player_id);
   };
 
-  return show ? (
+  return (
     <RosterRow>
       <RosterItem>
         <img src={player.image_path} width="50" height="auto" />
@@ -37,6 +40,15 @@ export const PlayerRoster = ({ player }) => {
         </Button>
       </RosterItem>
     </RosterRow>
-  ) : null;
+  );
 };
-PlayerRoster.propTypes = { players: PropTypes.array.isRequired };
+PlayerRoster.propTypes = {
+  players: PropTypes.array.isRequired,
+  addToLineup: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { addToLineup })(PlayerRoster);

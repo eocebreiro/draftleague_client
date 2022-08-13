@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getRoster } from "../../state/roster/rosterActions";
 
 import Spinner from "../../components/Spinner";
-import { PlayerRoster } from "./PlayerRoster";
+import PlayerRoster from "./PlayerRoster";
 import {
   OverviewContent,
   FieldImg,
@@ -14,11 +14,13 @@ import {
   RosterContent,
   RosterRow,
   RosterItem,
-  MainCOl,
+  MainCol,
   MainRow,
   RosterHeader,
   RosterRowHeader,
 } from "../../components/Div";
+import H1 from "../../components/H1";
+import FieldPlayers from "./FieldPlayers";
 
 const index = ({
   getRoster,
@@ -50,50 +52,92 @@ const index = ({
     getRoster(league._id, user._id);
   }, []);
 
-  let userData = [];
-
-  if (roster !== null && league !== null) {
-    for (let i = 0; i < roster.length; i++) {
-      userData.push(<PlayerRoster player={roster[i]} />);
+  // Find user's opponent and data
+  let opponent = null;
+  let scheduleIndex;
+  let dataIndex;
+  let userTeam;
+  for (let i = 0; i < league.schedule.length; i++) {
+    if (league.schedule[i].active) {
+      scheduleIndex = i;
+      for (let j = 0; j < league.schedule[i].data.length; j++) {
+        if (league.schedule[i].data[j].team_one.user_id === user._id) {
+          dataIndex = j;
+          userTeam = "team_one";
+          opponent = league.schedule[i].data[j].team_two.teamname;
+          break;
+        }
+        if (league.schedule[i].data[j].team_two.user_id === user._id) {
+          dataIndex = j;
+          userTeam = "team_two";
+          opponent = league.schedule[i].data[j].team_one.teamname;
+          break;
+        }
+      }
+      break;
     }
   }
 
+  let rosterList = [];
+  let fieldGKList = [];
+  let fieldDEFList = [];
+  let fieldMIDList = [];
+  let fieldFWDList = [];
+
+  if (roster !== null && league !== null) {
+    // Get field data
+    let lineup =
+      league.schedule[scheduleIndex].data[dataIndex][userTeam].lineup;
+
+    let foundIndex;
+    for (let j = 0; j < roster.length; j++) {
+      for (let i = 0; i < lineup.length; i++) {
+        foundIndex = null;
+        if (roster[j].player_id === lineup[i].player_id) {
+          foundIndex = [i];
+          break;
+        }
+      }
+      if (foundIndex) {
+        if (lineup[foundIndex].position_id === 1) {
+          fieldGKList.push(<FieldPlayers player={lineup[foundIndex]} />);
+        }
+        if (lineup[foundIndex].position_id === 2) {
+          fieldDEFList.push(<FieldPlayers player={lineup[foundIndex]} />);
+        }
+        if (lineup[foundIndex].position_id === 3) {
+          fieldMIDList.push(<FieldPlayers player={lineup[foundIndex]} />);
+        }
+        if (lineup[foundIndex].position_id === 4) {
+          fieldFWDList.push(<FieldPlayers player={lineup[foundIndex]} />);
+        }
+      } else {
+        rosterList.push(<PlayerRoster player={roster[j]} />);
+      }
+    }
+  }
   return roster === null && league === null ? (
     <Spinner />
   ) : (
     <Fragment>
       <MainRow>
+        <H1 size="L">Week: {league.activeWeek}</H1>
+        <H1 size="L">Opponent: {opponent}</H1>
+      </MainRow>
+      <MainRow>
         <FieldImg>
           <FieldContent>
-            <MainRow>
-              <PlayerWrapper />
-            </MainRow>
-            <MainRow>
-              <PlayerWrapper />
-              <PlayerWrapper />
-              <PlayerWrapper />
-              <PlayerWrapper />
-              <PlayerWrapper />
-            </MainRow>
-            <MainRow>
-              <PlayerWrapper />
-              <PlayerWrapper />
-              <PlayerWrapper />
-              <PlayerWrapper />
-              <PlayerWrapper />
-            </MainRow>
-            <MainRow>
-              <PlayerWrapper />
-              <PlayerWrapper />
-              <PlayerWrapper />
-            </MainRow>
+            <MainRow>{fieldGKList}</MainRow>
+            <MainRow>{fieldDEFList}</MainRow>
+            <MainRow>{fieldMIDList}</MainRow>
+            <MainRow>{fieldFWDList}</MainRow>
           </FieldContent>
         </FieldImg>
         <RosterContent>
           <RosterRowHeader>
             <RosterHeader>Roster</RosterHeader>
           </RosterRowHeader>
-          {userData}
+          {rosterList}
         </RosterContent>
       </MainRow>
     </Fragment>

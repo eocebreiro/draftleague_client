@@ -79,9 +79,10 @@ export const checkRostersLock = (league_id) => async (dispatch) => {
       params: { league_id: league_id },
     });
     dispatch({ type: UPDATE_LEAGUE, payload: res.data });
-  } catch (error) {
+  } catch (err) {
     dispatch({
       type: LEAGUE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
 };
@@ -95,9 +96,10 @@ export const addToLineup = (league_id, player_id) => async (dispatch) => {
       type: UPDATE_LEAGUE,
       payload: res.data,
     });
-  } catch (error) {
+  } catch (err) {
     dispatch({
       type: LEAGUE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
 };
