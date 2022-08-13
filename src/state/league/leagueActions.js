@@ -36,7 +36,6 @@ export const createLeague = (formData) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    console.log(formData);
 
     const res = await axios.post("/api/league/create", formData, config);
     await dispatch({
@@ -70,11 +69,32 @@ export const joinLeague = (formData) => async (dispatch) => {
 // Check to see if players are locked in a league
 export const checkRostersLock = (league_id) => async (dispatch) => {
   try {
-    console.log("test");
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
     const res = await axios.get(`/api/league/rosters/lock/check`, {
       params: { league_id: league_id },
     });
     dispatch({ type: UPDATE_LEAGUE, payload: res.data });
+  } catch (error) {
+    dispatch({
+      type: LEAGUE_ERROR,
+    });
+  }
+};
+
+export const addToLineup = (league_id, player_id) => async (dispatch) => {
+  try {
+    const res = await axios.post(
+      `/api/league/${league_id}/player/lineup/${player_id}`
+    );
+    await dispatch({
+      type: UPDATE_LEAGUE,
+      payload: res.data,
+    });
   } catch (error) {
     dispatch({
       type: LEAGUE_ERROR,
