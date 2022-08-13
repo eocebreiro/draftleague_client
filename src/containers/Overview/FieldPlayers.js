@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
+import { dropFromLineup } from "../../state/league/leagueActions";
 
 //Font Awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,19 +10,14 @@ import { faX } from "@fortawesome/free-solid-svg-icons";
 
 //Styling Components
 import P from "../../components/P";
-import {
-  Div,
-  PlayerWrapper,
-  FieldImage,
-  FieldItem,
-} from "../../components/Div";
+import { PlayerWrapper, FieldImage, FieldItem } from "../../components/Div";
 import { Button } from "../../components/Button";
 
-const PlayerRoster = ({ player }) => {
+const PlayerRoster = ({ player, dropFromLineup }) => {
   const { id } = useParams();
 
   const onClick = async (e) => {
-    // deleteFromLineup(id, player.player_id);
+    dropFromLineup(id, player.player_id);
   };
 
   return (
@@ -60,6 +56,7 @@ const PlayerRoster = ({ player }) => {
 };
 PlayerRoster.propTypes = {
   league: PropTypes.object.isRequired,
+  dropFromLineup: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -67,4 +64,4 @@ const mapStateToProps = (state) => ({
   league: state.league,
 });
 
-export default connect(mapStateToProps, {})(PlayerRoster);
+export default connect(mapStateToProps, { dropFromLineup })(PlayerRoster);

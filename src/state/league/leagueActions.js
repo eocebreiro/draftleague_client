@@ -90,7 +90,24 @@ export const checkRostersLock = (league_id) => async (dispatch) => {
 export const addToLineup = (league_id, player_id) => async (dispatch) => {
   try {
     const res = await axios.post(
-      `/api/league/${league_id}/player/lineup/${player_id}`
+      `/api/league/${league_id}/player/lineup/add/${player_id}`
+    );
+    await dispatch({
+      type: UPDATE_LEAGUE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: LEAGUE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+export const dropFromLineup = (league_id, player_id) => async (dispatch) => {
+  try {
+    const res = await axios.post(
+      `/api/league/${league_id}/player/lineup/drop/${player_id}`
     );
     await dispatch({
       type: UPDATE_LEAGUE,

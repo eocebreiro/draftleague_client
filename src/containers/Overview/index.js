@@ -9,11 +9,8 @@ import {
   OverviewContent,
   FieldImg,
   FieldContent,
-  PlayerWrapper,
+  PlaceHolderWrapper,
   RosterContent,
-  RosterRow,
-  RosterItem,
-  MainCol,
   MainRow,
   RosterHeader,
   RosterRowHeader,
@@ -127,10 +124,30 @@ const index = ({
       <MainRow>
         <FieldImg>
           <FieldContent>
-            <MainRow>{fieldGKList}</MainRow>
-            <MainRow>{fieldDEFList}</MainRow>
-            <MainRow>{fieldMIDList}</MainRow>
-            <MainRow>{fieldFWDList}</MainRow>
+            <MainRow>
+              {fieldGKList.length === 0 ? <PlaceHolderWrapper /> : fieldGKList}
+            </MainRow>
+            <MainRow>
+              {fieldDEFList.length === 0 ? (
+                <PlaceHolderWrapper />
+              ) : (
+                fieldDEFList
+              )}
+            </MainRow>
+            <MainRow>
+              {fieldMIDList.length === 0 ? (
+                <PlaceHolderWrapper />
+              ) : (
+                fieldMIDList
+              )}
+            </MainRow>
+            <MainRow>
+              {fieldFWDList.length === 0 ? (
+                <PlaceHolderWrapper />
+              ) : (
+                fieldFWDList
+              )}
+            </MainRow>
           </FieldContent>
         </FieldImg>
         <RosterContent>

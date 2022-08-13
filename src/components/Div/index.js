@@ -111,6 +111,13 @@ export const FieldContent = styled.div`
   height: 800px;
 `;
 
+export const PlaceHolderWrapper = styled.div`
+  width: 150px;
+  height: 155px;
+  margin: 10px;
+  position: relative;
+`;
+
 export const PlayerWrapper = styled.div`
   display: flex;
   flex-direction: column;
