@@ -5,7 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getRoster } from "../../state/roster/rosterActions";
 
 import Spinner from "../../components/Spinner";
-import PlayerRoster from "./PlayerRoster";
 import {
   OverviewContent,
   FieldImg,
@@ -21,6 +20,7 @@ import {
 } from "../../components/Div";
 import H1 from "../../components/H1";
 import FieldPlayers from "./FieldPlayers";
+import RosterPlayers from "./RosterPlayers";
 
 const index = ({
   getRoster,
@@ -112,7 +112,7 @@ const index = ({
           fieldFWDList.push(<FieldPlayers player={lineup[foundIndex]} />);
         }
       } else {
-        rosterList.push(<PlayerRoster player={roster[j]} />);
+        rosterList.push(<RosterPlayers player={roster[j]} />);
       }
     }
   }

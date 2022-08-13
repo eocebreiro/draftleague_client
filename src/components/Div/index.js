@@ -112,11 +112,17 @@ export const FieldContent = styled.div`
 `;
 
 export const PlayerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   position: relative;
-  border: 2px solid green;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 10px 5px 25px rgba(0, 0, 0, 0.5);
+  border: 2px solid black;
   width: 150px;
-  height: 150px;
+  height: 155px;
   margin: 10px;
+  overflow: hidden;
 `;
 export const RosterContent = styled.div`
   position: relative;
@@ -165,6 +171,11 @@ export const MainRow = styled.div`
 export const MainCol = styled.div`
   width: 100%;
 `;
+
+export const FieldItem = styled(RosterItem)`
+  padding-top: 10px;
+`;
+export const FieldImage = styled(RosterItem)``;
 
 // -----------
 

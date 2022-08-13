@@ -9,11 +9,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 //Styling Components
-import P from "../../components/P";
 import { RosterRow, RosterItem } from "../../components/Div";
 import { Button } from "../../components/Button";
 
-const PlayerRoster = ({ player, addToLineup }) => {
+const RosterPlayers = ({ player, addToLineup }) => {
   const { id } = useParams();
 
   const onClick = async (e) => {
@@ -34,7 +33,7 @@ const PlayerRoster = ({ player, addToLineup }) => {
         <Button
           onClick={(e) => onClick(player.player_id, e)}
           color={"transparent"}
-          type={"button"}
+          type={"icon"}
         >
           <FontAwesomeIcon icon={faPlus} size="lg" style={{ color: "black" }} />
         </Button>
@@ -42,7 +41,7 @@ const PlayerRoster = ({ player, addToLineup }) => {
     </RosterRow>
   );
 };
-PlayerRoster.propTypes = {
+RosterPlayers.propTypes = {
   players: PropTypes.array.isRequired,
   addToLineup: PropTypes.func.isRequired,
 };
@@ -51,4 +50,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { addToLineup })(PlayerRoster);
+export default connect(mapStateToProps, { addToLineup })(RosterPlayers);

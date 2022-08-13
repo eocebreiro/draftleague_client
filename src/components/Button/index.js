@@ -3,7 +3,7 @@ import React, { Children, Fragment } from "react";
 import PropTypes from "prop-types";
 
 import StyledLink from "./StyledLink";
-import StyledButton from "./StyledButton";
+import { StyledButton, StyledIconButton } from "./StyledButton";
 
 export const Button = (props) => {
   // Render an anchor tag (Link)
@@ -35,6 +35,20 @@ export const Button = (props) => {
       >
         {Children.toArray(props.children)}
       </StyledButton>
+    );
+  }
+
+  // If the button is an icon
+  if (props.type === "icon") {
+    button = (
+      <StyledIconButton
+        onClick={props.onClick}
+        color={props.color}
+        width={props.width}
+        disabled={props.disabled}
+      >
+        {Children.toArray(props.children)}
+      </StyledIconButton>
     );
   }
 
