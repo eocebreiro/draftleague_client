@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getRoster } from "../../state/roster/rosterActions";
+import { getLineup } from "../../state/lineup/lineupActions";
+import { getFixtures } from "../../state/fixtures/fixturesActions";
 
 import Spinner from "../../components/Spinner";
 import {
@@ -14,16 +16,24 @@ import {
   MainRow,
   RosterHeader,
   RosterRowHeader,
+  FixturesContent,
+  FixtureRowHeader,
+  FixtureItemHeader,
 } from "../../components/Div";
 import H1 from "../../components/H1";
 import FieldPlayers from "./FieldPlayers";
 import RosterPlayers from "./RosterPlayers";
+import Fixtures from "./Fixtures";
 
 const index = ({
   getRoster,
   auth: { user },
   league: { league },
   roster: { roster, loading },
+  getLineup,
+  lineup: { lineup },
+  getFixtures,
+  fixtures: { fixtures },
 }) => {
   // Check to see if league is full
   if (!league.participantsFull) {
@@ -47,6 +57,7 @@ const index = ({
 
   useEffect(() => {
     getRoster(league._id, user._id);
+    getFixtures();
   }, []);
 
   // Find user's opponent and data
@@ -81,39 +92,54 @@ const index = ({
   let fieldMIDList = [];
   let fieldFWDList = [];
 
-  if (roster !== null && league !== null) {
+  let userLineup = [];
+
+  let fixturesList = [];
+
+  // waiting for state
+  if (roster !== null && league !== null && fixtures !== null) {
     // Get field data
-    let lineup =
+    userLineup =
       league.schedule[scheduleIndex].data[dataIndex][userTeam].lineup;
 
     let foundIndex;
     for (let j = 0; j < roster.length; j++) {
-      for (let i = 0; i < lineup.length; i++) {
+      for (let i = 0; i < userLineup.length; i++) {
         foundIndex = null;
-        if (roster[j].player_id === lineup[i].player_id) {
+        if (roster[j].player_id === userLineup[i].player_id) {
           foundIndex = [i];
           break;
         }
       }
       if (foundIndex) {
-        if (lineup[foundIndex].position_id === 1) {
-          fieldGKList.push(<FieldPlayers player={lineup[foundIndex]} />);
+        if (userLineup[foundIndex].position_id === 1) {
+          fieldGKList.push(<FieldPlayers player={userLineup[foundIndex]} />);
         }
-        if (lineup[foundIndex].position_id === 2) {
-          fieldDEFList.push(<FieldPlayers player={lineup[foundIndex]} />);
+        if (userLineup[foundIndex].position_id === 2) {
+          fieldDEFList.push(<FieldPlayers player={userLineup[foundIndex]} />);
         }
-        if (lineup[foundIndex].position_id === 3) {
-          fieldMIDList.push(<FieldPlayers player={lineup[foundIndex]} />);
+        if (userLineup[foundIndex].position_id === 3) {
+          fieldMIDList.push(<FieldPlayers player={userLineup[foundIndex]} />);
         }
-        if (lineup[foundIndex].position_id === 4) {
-          fieldFWDList.push(<FieldPlayers player={lineup[foundIndex]} />);
+        if (userLineup[foundIndex].position_id === 4) {
+          fieldFWDList.push(<FieldPlayers player={userLineup[foundIndex]} />);
         }
       } else {
         rosterList.push(<RosterPlayers player={roster[j]} />);
       }
     }
+
+    // fixtures
+    for (let i = 0; i < fixtures.data.length; i++) {
+      fixturesList.push(<Fixtures fixture={fixtures.data[i]} />);
+    }
   }
-  return roster === null && league === null ? (
+
+  useEffect(() => {
+    getLineup(league._id, user._id);
+  }, [userLineup.length]);
+
+  return roster === null || league === null || lineup == null ? (
     <Spinner />
   ) : (
     <Fragment>
@@ -157,16 +183,27 @@ const index = ({
           {rosterList}
         </RosterContent>
       </MainRow>
+      <MainRow>
+        <FixturesContent>
+          <FixtureRowHeader>
+            <FixtureItemHeader>Fixtures</FixtureItemHeader>
+          </FixtureRowHeader>
+          {fixturesList}
+        </FixturesContent>
+      </MainRow>
     </Fragment>
   );
 };
 
 index.propTypes = {
   getRoster: PropTypes.func.isRequired,
+  getLineup: PropTypes.func.isRequired,
   roster: PropTypes.object.isRequired,
   players: PropTypes.object.isRequired,
   league: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  lineup: PropTypes.array.isRequired,
+  getFixtures: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -174,6 +211,10 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   league: state.league,
   roster: state.roster,
+  lineup: state.lineup,
+  fixtures: state.fixtures,
 });
 
-export default connect(mapStateToProps, { getRoster })(index);
+export default connect(mapStateToProps, { getRoster, getLineup, getFixtures })(
+  index
+);

@@ -98,7 +98,6 @@ export const FieldImg = styled.div`
   width: 100%;
   max-width: 900px;
   height: 800px;
-  border: 2px solid red;
   margin-right: 10px;
 `;
 export const FieldContent = styled.div`
@@ -107,7 +106,6 @@ export const FieldContent = styled.div`
   align-items: center;
   justify-content: space-between;
   position: relative;
-  border: 2px solid red;
   height: 800px;
 `;
 
@@ -126,7 +124,7 @@ export const PlayerWrapper = styled.div`
   border-radius: 15px;
   box-shadow: 10px 5px 25px rgba(0, 0, 0, 0.5);
   border: 2px solid black;
-  width: 150px;
+  width: 160px;
   height: 155px;
   margin: 10px;
   overflow: hidden;
@@ -160,6 +158,66 @@ export const RosterHeader = styled(RosterItem)`
 `;
 
 export const RosterRowHeader = styled(RosterRow)`
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+// Fixtures table
+export const FixturesContent = styled.div`
+  position: relative;
+  min-width: 1100px;
+`;
+
+export const FixtureTeam = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 100%;
+  min-width: 200px;
+`;
+export const FixtureMatchup = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 100%;
+  min-width: 300px;
+`;
+export const FixtureData = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  line-height: 100%;
+  min-width: 300px;
+`;
+export const Score = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 100%;
+  min-width: 100px;
+`;
+export const FixtureItemHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 100%;
+  color: white;
+  font-weight: 700;
+`;
+
+export const FixtureRow = styled.div`
+  display: flex;
+  max-width: 100%;
+  justify-content: center;
+  padding: 10px;
+  gap: 20px;
+`;
+export const FixtureRowHeader = styled(FixtureRow)`
   background: black;
   display: flex;
   justify-content: center;

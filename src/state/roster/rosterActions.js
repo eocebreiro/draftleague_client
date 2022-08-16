@@ -23,21 +23,11 @@ export const getRoster = (league_id, player_id) => async (dispatch) => {
   }
 };
 
-// Drop player to team in a league
+// Drop (delete) player from a team
 export const dropPlayer = ({ league_id, player_id }) => async (dispatch) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
-  const body = JSON.stringify({ league_id });
-
   try {
     const res = await axios.post(
-      `/api/league/player/drop/${player_id}`,
-      body,
-      config
+      `/api/league/${league_id}/roster/drop/${player_id}`
     );
     dispatch({
       type: GET_ROSTER,

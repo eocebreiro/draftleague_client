@@ -73,19 +73,9 @@ export const getRoster = (league_id, player_id) => async (dispatch) => {
 
 // Add player to team in a league
 export const addPlayer = ({ league_id, player_id }) => async (dispatch) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
-  const body = JSON.stringify({ league_id });
-
   try {
     const res = await axios.post(
-      `/api/league/player/add/${player_id}`,
-      body,
-      config
+      `/api/league/${league_id}/roster/add/${player_id}`
     );
     dispatch({
       type: GET_PLAYERS,

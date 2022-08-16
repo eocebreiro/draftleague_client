@@ -68,9 +68,9 @@ const PlayerTable = ({
 
     // Calculate season total points
     let totalPoints = 0;
-    for (let i = 0; i < player.data.length; i++) {
-      if (player.data[i].played) {
-        totalPoints = totalPoints + player.data[i].total_points;
+    for (let i = 0; i < player.fixtures.length; i++) {
+      if (player.fixtures[i].played) {
+        totalPoints = totalPoints + player.fixtures[i].stats.total_points;
       }
     }
 
@@ -108,7 +108,9 @@ const PlayerTable = ({
             >
               <img src={player.image_path} />
             </div>
-            {player.common_name}
+            {player.display_name === null
+              ? player.common_name
+              : player.display_name}
           </Link>
         </TableItem>
         <TableItem style={{ width: "100px" }}>{player.team.name}</TableItem>

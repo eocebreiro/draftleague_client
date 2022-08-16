@@ -9,6 +9,8 @@ import leagueReducer from "./league/leagueReducer";
 import playersReducer from "./players/playersReducer";
 import playerReducer from "./player/playerReducer";
 import rosterReducer from "./roster/rosterReducer";
+import lineupReducer from "./lineup/lineupReducer";
+import fixturesReducer from "./fixtures/fixturesReducer";
 
 const preloadedState = {};
 
@@ -20,6 +22,8 @@ const rootReducer = combineReducers({
   players: playersReducer,
   player: playerReducer,
   roster: rosterReducer,
+  lineup: lineupReducer,
+  fixtures: fixturesReducer,
 });
 
 const store = configureStore({
