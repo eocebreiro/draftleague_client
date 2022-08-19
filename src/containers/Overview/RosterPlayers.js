@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { addToLineup } from "../../state/league/leagueActions";
 
 //Font Awesome
@@ -21,14 +21,28 @@ const RosterPlayers = ({ player, addToLineup }) => {
 
   return (
     <RosterRow>
-      <RosterItem>
-        <img src={player.image_path} width="50" height="auto" />
-      </RosterItem>
-      <RosterItem>
-        <span>{player.display_name}</span>
-        <span>{player.position}</span>
-        <span>{player.team.short_code}</span>
-      </RosterItem>
+      <Link
+        to={"/player/" + player.player_id}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          color: "black",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
+        <RosterItem>
+          <img src={player.image_path} width="50" height="auto" />
+        </RosterItem>
+        <RosterItem style={{ flex: "1" }}>
+          <span>{player.display_name}</span>
+          <span>{player.position}</span>
+          <span>{player.team.short_code}</span>
+        </RosterItem>
+      </Link>
       <RosterItem>
         <Button
           onClick={(e) => onClick(player.player_id, e)}

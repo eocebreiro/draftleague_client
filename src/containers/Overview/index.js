@@ -66,7 +66,7 @@ const index = ({
   let dataIndex;
   let userTeam;
   for (let i = 0; i < league.schedule.length; i++) {
-    if (league.schedule[i].active) {
+    if (league.schedule[i].week === league.activeWeek) {
       scheduleIndex = i;
       for (let j = 0; j < league.schedule[i].data.length; j++) {
         if (league.schedule[i].data[j].team_one.user_id === user._id) {

@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
+import moment from "moment-timezone";
 
 //Styling Components
 import P from "../../components/P";
@@ -58,6 +59,35 @@ const Fixtures = ({ fixture }) => {
     );
   }
 
+  // get users timezonoffset
+  let time = moment(fixture.time.timestamp * 1000);
+  let tzid = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  let dow = null;
+  switch (time.day()) {
+    case 0:
+      dow = "Sunday";
+      break;
+    case 1:
+      dow = "Monday";
+      break;
+    case 2:
+      dow = "Tuesday";
+      break;
+    case 3:
+      dow = "Wednesday";
+      break;
+    case 4:
+      dow = "Thursday";
+      break;
+    case 5:
+      dow = "Friday";
+      break;
+    case 6:
+      dow = "Saturday";
+      break;
+  }
+
   return (
     <FixtureRow>
       <FixtureTeam>
@@ -65,11 +95,16 @@ const Fixtures = ({ fixture }) => {
         <div>{fixture.localTeam.name}</div>
       </FixtureTeam>
       <FixtureMatchup>
-        {fixture.time.status === "NS"
-          ? "SHOW TIME"
-          : fixture.time.status !== "FT"
-          ? result
-          : result}
+        {fixture.time.status === "NS" ? (
+          <Fragment>
+            <span>{dow + " " + time.tz(tzid).format("MM-DD-YYYY")}</span>{" "}
+            <span>{time.tz(tzid).format("HH:mm z")}</span>
+          </Fragment>
+        ) : fixture.time.status !== "FT" ? (
+          result
+        ) : (
+          result
+        )}
       </FixtureMatchup>
       <FixtureTeam>
         <img src={fixture.visitorTeam.logo_path} width="60px" />{" "}
