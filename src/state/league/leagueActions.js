@@ -14,7 +14,7 @@ export const getLeague = (leagueId) => async (dispatch) => {
     type: CLEAR_LEAGUE,
   });
   try {
-    const res = await axios.get(`/api/league/${leagueId}`);
+    const res = await axios.get(process.env.APIURL + `/api/league/${leagueId}`);
 
     dispatch({
       type: GET_LEAGUE,
@@ -37,7 +37,11 @@ export const createLeague = (formData) => async (dispatch) => {
       },
     };
 
-    const res = await axios.post("/api/league/create", formData, config);
+    const res = await axios.post(
+      process.env.APIURL + "/api/league/create",
+      formData,
+      config
+    );
     await dispatch({
       type: UPDATE_LEAGUE,
       payload: res.data,
@@ -56,7 +60,11 @@ export const joinLeague = (formData) => async (dispatch) => {
       },
     };
 
-    const res = await axios.post("/api/league/join", formData, config);
+    const res = await axios.post(
+      process.env.APIURL + "/api/league/join",
+      formData,
+      config
+    );
     dispatch({
       type: UPDATE_LEAGUE,
       payload: res.data,
@@ -75,9 +83,12 @@ export const checkRostersLock = (league_id) => async (dispatch) => {
       },
     };
 
-    const res = await axios.get(`/api/league/rosters/lock/check`, {
-      params: { league_id: league_id },
-    });
+    const res = await axios.get(
+      process.env.APIURL + `/api/league/rosters/lock/check`,
+      {
+        params: { league_id: league_id },
+      }
+    );
     dispatch({ type: UPDATE_LEAGUE, payload: res.data });
   } catch (err) {
     dispatch({
@@ -90,7 +101,7 @@ export const checkRostersLock = (league_id) => async (dispatch) => {
 export const addToLineup = (league_id, player_id) => async (dispatch) => {
   try {
     const res = await axios.post(
-      `/api/league/${league_id}/lineup/add/${player_id}`
+      process.env.APIURL + `/api/league/${league_id}/lineup/add/${player_id}`
     );
     await dispatch({
       type: UPDATE_LEAGUE,
@@ -107,7 +118,7 @@ export const addToLineup = (league_id, player_id) => async (dispatch) => {
 export const dropFromLineup = (league_id, player_id) => async (dispatch) => {
   try {
     const res = await axios.post(
-      `/api/league/${league_id}/lineup/drop/${player_id}`
+      process.env.APIURL + `/api/league/${league_id}/lineup/drop/${player_id}`
     );
     await dispatch({
       type: UPDATE_LEAGUE,

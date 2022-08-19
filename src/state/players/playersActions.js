@@ -16,7 +16,7 @@ export const getNewPlayers = () => async (dispatch) => {
     type: CLEAR_NEWPLAYERS,
   });
   try {
-    const res = await axios.get(`/api/players/new`);
+    const res = await axios.get(process.env.APIURL + `/api/players/new`);
 
     dispatch({
       type: GET_NEWPLAYERS,
@@ -36,7 +36,7 @@ export const getPlayers = () => async (dispatch) => {
     type: CLEAR_PLAYERS,
   });
   try {
-    const res = await axios.get(`/api/players/`);
+    const res = await axios.get(process.env.APIURL + `/api/players/`);
 
     dispatch({
       type: GET_PLAYERS,
@@ -57,7 +57,9 @@ export const getRoster = (league_id, player_id) => async (dispatch) => {
   });
   console.log(player_id);
   try {
-    const res = await axios.get(`/api/league/${league_id}/roster/${player_id}`);
+    const res = await axios.get(
+      process.env.APIURL + `/api/league/${league_id}/roster/${player_id}`
+    );
 
     dispatch({
       type: GET_PLAYERS,
@@ -75,7 +77,7 @@ export const getRoster = (league_id, player_id) => async (dispatch) => {
 export const addPlayer = ({ league_id, player_id }) => async (dispatch) => {
   try {
     const res = await axios.post(
-      `/api/league/${league_id}/roster/add/${player_id}`
+      process.env.APIURL + `/api/league/${league_id}/roster/add/${player_id}`
     );
     dispatch({
       type: GET_PLAYERS,

@@ -15,7 +15,7 @@ export const getLeagues = (userId) => async (dispatch) => {
   });
 
   try {
-    const res = await axios.get(`/api/leagues/${userId}`);
+    const res = await axios.get(process.env.APIURL + `/api/leagues/${userId}`);
 
     dispatch({
       type: GET_LEAGUES,

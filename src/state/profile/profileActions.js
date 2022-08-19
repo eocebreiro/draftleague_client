@@ -24,7 +24,7 @@ export const getCurrentProfile = () => async (dispatch) => {
   dispatch({ type: PROFILE_LOADING });
 
   try {
-    const res = await axios.get("/api/profile/me");
+    const res = await axios.get(process.env.APIURL + "/api/profile/me");
 
     dispatch({
       type: GET_PROFILE,
@@ -51,7 +51,11 @@ export const createProfile = (formData, edit = false) => async (dispatch) => {
       },
     };
 
-    const res = await axios.post("/api/profile", formData, config);
+    const res = await axios.post(
+      process.env.APIURL + "/api/profile",
+      formData,
+      config
+    );
     dispatch({
       type: GET_PROFILE,
       payload: res.data,

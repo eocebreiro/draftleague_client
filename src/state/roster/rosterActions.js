@@ -9,7 +9,9 @@ export const getRoster = (league_id, player_id) => async (dispatch) => {
     type: CLEAR_ROSTER,
   });
   try {
-    const res = await axios.get(`/api/league/${league_id}/roster/${player_id}`);
+    const res = await axios.get(
+      process.env.APIURL + `/api/league/${league_id}/roster/${player_id}`
+    );
 
     dispatch({
       type: GET_ROSTER,
@@ -27,7 +29,7 @@ export const getRoster = (league_id, player_id) => async (dispatch) => {
 export const dropPlayer = ({ league_id, player_id }) => async (dispatch) => {
   try {
     const res = await axios.post(
-      `/api/league/${league_id}/roster/drop/${player_id}`
+      process.env.APIURL + `/api/league/${league_id}/roster/drop/${player_id}`
     );
     dispatch({
       type: GET_ROSTER,

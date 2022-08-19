@@ -9,7 +9,7 @@ export const getPlayer = (playerId) => async (dispatch) => {
     type: CLEAR_PLAYER,
   });
   try {
-    const res = await axios.get(`/api/player/${playerId}`);
+    const res = await axios.get(process.env.APIURL + `/api/player/${playerId}`);
 
     dispatch({
       type: GET_PLAYER,
