@@ -17,6 +17,8 @@ import {
   CLEAR_ROSTER,
 } from "../types";
 
+const { REACT_APP_APIURL } = process.env;
+
 // Load User
 export const loadUser = () => async (dispatch) => {
   if (localStorage.token) {

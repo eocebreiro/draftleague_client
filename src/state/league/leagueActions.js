@@ -7,6 +7,7 @@ import {
   CLEAR_LEAGUE,
   UPDATE_LEAGUE,
 } from "../types";
+const { REACT_APP_APIURL } = process.env;
 
 //Get leagues by league ID
 export const getLeague = (leagueId) => async (dispatch) => {

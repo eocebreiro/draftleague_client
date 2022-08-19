@@ -9,6 +9,7 @@ import {
   CLEAR_PLAYERS,
   PLAYERS_ERROR,
 } from "../types";
+const { REACT_APP_APIURL } = process.env;
 
 //Get new players list
 export const getNewPlayers = () => async (dispatch) => {

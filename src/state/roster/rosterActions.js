@@ -2,6 +2,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import { GET_ROSTER, ROSTER_ERROR, CLEAR_ROSTER } from "../types";
+const { REACT_APP_APIURL } = process.env;
 
 //Get a user roster list
 export const getRoster = (league_id, player_id) => async (dispatch) => {

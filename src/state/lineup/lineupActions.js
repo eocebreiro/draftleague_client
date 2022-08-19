@@ -1,5 +1,6 @@
 import axios from "axios";
 import { CLEAR_LINEUP, GET_LINEUP, LINEUP_ERROR } from "../types";
+const { REACT_APP_APIURL } = process.env;
 
 //Get a user's lineup for the active week
 export const getLineup = (league_id, user_id) => async (dispatch) => {

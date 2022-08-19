@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import { GET_FIXTURES, FIXTURES_ERROR, CLEAR_FIXTURES } from "../types";
 
+const { REACT_APP_APIURL } = process.env;
+
 //Get fixtures by league ID
 export const getFixtures = () => async (dispatch) => {
   try {

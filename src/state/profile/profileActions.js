@@ -12,6 +12,7 @@ import {
   CLEAR_PLAYER,
   CLEAR_ROSTER,
 } from "../types";
+const { REACT_APP_APIURL } = process.env;
 
 //Get current users profile
 export const getCurrentProfile = () => async (dispatch) => {

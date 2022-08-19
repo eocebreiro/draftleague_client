@@ -2,6 +2,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import { GET_PLAYER, PLAYER_ERROR, CLEAR_PLAYER } from "../types";
+const { REACT_APP_APIURL } = process.env;
 
 //Get player by ID
 export const getPlayer = (playerId) => async (dispatch) => {
