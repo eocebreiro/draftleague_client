@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const StyledLeague = styled.div`
-  border: 0.5px solid;
+  border: 0.5px solid black;
   background: #cccccc;
   margin: auto;
   border-radius: 5px;
@@ -9,7 +9,8 @@ const StyledLeague = styled.div`
   flex: 1;
   height: 100px;
   align-items: center;
-  box-shadow: 2px 5px 20px #888888;
+  box-shadow: 8px 5px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 20px;
 `;
 
 export default StyledLeague;
