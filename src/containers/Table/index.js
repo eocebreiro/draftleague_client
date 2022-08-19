@@ -3,13 +3,167 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
+//Font Awesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowUp,
+  faArrowDown,
+  faMinus,
+} from "@fortawesome/free-solid-svg-icons";
+
 //Styling Components
 import Spinner from "../../components/Spinner";
+import {
+  Table,
+  TableRow,
+  TableItem,
+  TableHeader,
+  TableRowHeader,
+} from "../../components/Table";
 
-const index = () => {
-  return <Fragment>Table Coming Soon</Fragment>;
+const index = ({ league: { league } }) => {
+  let players = [];
+  let width = "50px";
+  let prevRankingIndex = null;
+  let arrow;
+
+  for (let i = 0; i < league.ranking.length; i++) {
+    // Check to see if there was a match before
+    if (league.ranking[i].week === league.activeWeek - 1) {
+      prevRankingIndex = i;
+      break;
+    }
+  }
+
+  for (let i = 0; i < league.ranking.length; i++) {
+    // Get last weeks results and ranking
+
+    if (league.ranking[i].week === league.activeWeek) {
+      for (let j = 0; j < league.ranking[i].players.length; j++) {
+        if (prevRankingIndex !== null) {
+          for (
+            let k = 0;
+            k < league.ranking[prevRankingIndex].players.length;
+            k++
+          ) {
+            if (
+              league.ranking[i].players[j].user_id ===
+              league.ranking[prevRankingIndex].players[k].user_id
+            ) {
+              if (
+                league.ranking[i].players[j].rank <
+                league.ranking[prevRankingIndex].players[k].rank
+              ) {
+                arrow = (
+                  <FontAwesomeIcon
+                    style={{ color: "green" }}
+                    icon={faArrowUp}
+                  />
+                );
+              } else if (
+                league.ranking[i].players[j].rank >
+                league.ranking[prevRankingIndex].players[k].rank
+              ) {
+                arrow = (
+                  <FontAwesomeIcon
+                    style={{ color: "red" }}
+                    icon={faArrowDown}
+                  />
+                );
+              } else {
+                arrow = <FontAwesomeIcon icon={faMinus} />;
+              }
+            }
+          }
+        } else {
+          if (
+            league.ranking[i].players[j].wins === 1 ||
+            league.ranking[i].players[j].draws === 1
+          ) {
+            arrow = (
+              <FontAwesomeIcon style={{ color: "green" }} icon={faArrowUp} />
+            );
+          } else {
+            arrow = (
+              <FontAwesomeIcon style={{ color: "red" }} icon={faArrowDown} />
+            );
+          }
+        }
+        players.push(
+          <TableRow>
+            <TableItem style={{ width: "20px" }}>{arrow}</TableItem>
+
+            <TableItem style={{ width: width }}>
+              {league.ranking[i].players[j].rank}
+            </TableItem>
+            <TableItem style={{ width: "150px" }}>
+              {league.ranking[i].players[j].teamname}
+            </TableItem>
+            <TableItem style={{ width: width }}>
+              {league.ranking[i].players[j].wins}
+            </TableItem>
+            <TableItem style={{ width: width }}>
+              {league.ranking[i].players[j].draws}
+            </TableItem>
+            <TableItem style={{ width: width }}>
+              {league.ranking[i].players[j].losses}
+            </TableItem>
+            <TableItem style={{ width: width }}>
+              {league.ranking[i].players[j].league_points}
+            </TableItem>
+            <TableItem style={{ width: width }}>
+              {league.ranking[i].players[j].total_points}
+            </TableItem>
+          </TableRow>
+        );
+      }
+      break;
+    }
+  }
+
+  if (players.length === 0) {
+    for (let k = 0; k < league.participants.length; k++) {
+      // Empty table beccause games have not started yet
+      players.push(
+        <TableRow>
+          <TableItem style={{ width: "20px" }}></TableItem>
+          <TableItem style={{ width: width }}>{"-"}</TableItem>
+          <TableItem>{league.participants[k].teamname}</TableItem>
+          <TableItem style={{ width: width }}>{"0"}</TableItem>
+          <TableItem style={{ width: width }}>{"0"}</TableItem>
+          <TableItem style={{ width: width }}>{"0"}</TableItem>
+          <TableItem style={{ width: width }}>{"0"}</TableItem>
+          <TableItem style={{ width: width }}>{"0"}</TableItem>
+        </TableRow>
+      );
+    }
+  }
+
+  return (
+    <Table>
+      <TableRowHeader>
+        <TableHeader style={{ width: "20px" }}></TableHeader>
+        <TableHeader style={{ width: width }}>Rank</TableHeader>
+        <TableHeader style={{ width: "150px" }}>Team</TableHeader>
+        <TableHeader style={{ width: width }}>Wins</TableHeader>
+        <TableHeader style={{ width: width }}>Draws</TableHeader>
+        <TableHeader style={{ width: width }}>Losses</TableHeader>
+        <TableHeader style={{ width: width }}>Points</TableHeader>
+        <TableHeader style={{ width: width }}>Score</TableHeader>
+      </TableRowHeader>
+      {players}
+    </Table>
+  );
 };
 
-index.propTypes = {};
+index.propTypes = {
+  league: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+};
 
-export default index;
+const mapStateToProps = (state) => ({
+  league: state.league,
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(index);
