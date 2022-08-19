@@ -163,10 +163,17 @@ export const RosterRowHeader = styled(RosterRow)`
   justify-content: center;
   align-items: center;
 `;
+
+export const LeaguesContent = styled.div`
+  position: relative;
+  min-width: 1100px;
+`;
+
 // Fixtures table
 export const FixturesContent = styled.div`
   position: relative;
-  min-width: 1100px;
+  min-width: 100%;
+  margin: 50px 0;
 `;
 
 export const FixtureTeam = styled.div`
