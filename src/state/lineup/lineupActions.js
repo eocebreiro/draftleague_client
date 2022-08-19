@@ -5,7 +5,7 @@ import { CLEAR_LINEUP, GET_LINEUP, LINEUP_ERROR } from "../types";
 export const getLineup = (league_id, user_id) => async (dispatch) => {
   try {
     const res = await axios.get(
-      process.env.APIURL + `/api/league/${league_id}/lineup/${user_id}`
+      REACT_APP_APIURL + `/api/league/${league_id}/lineup/${user_id}`
     );
 
     dispatch({

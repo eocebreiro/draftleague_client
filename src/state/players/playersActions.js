@@ -16,7 +16,7 @@ export const getNewPlayers = () => async (dispatch) => {
     type: CLEAR_NEWPLAYERS,
   });
   try {
-    const res = await axios.get(process.env.APIURL + `/api/players/new`);
+    const res = await axios.get(REACT_APP_APIURL + `/api/players/new`);
 
     dispatch({
       type: GET_NEWPLAYERS,

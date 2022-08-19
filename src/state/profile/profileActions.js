@@ -24,7 +24,7 @@ export const getCurrentProfile = () => async (dispatch) => {
   dispatch({ type: PROFILE_LOADING });
 
   try {
-    const res = await axios.get(process.env.APIURL + "/api/profile/me");
+    const res = await axios.get(REACT_APP_APIURL + "/api/profile/me");
 
     dispatch({
       type: GET_PROFILE,

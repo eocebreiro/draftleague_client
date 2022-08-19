@@ -6,7 +6,7 @@ import { GET_FIXTURES, FIXTURES_ERROR, CLEAR_FIXTURES } from "../types";
 //Get fixtures by league ID
 export const getFixtures = () => async (dispatch) => {
   try {
-    const res = await axios.get(process.env.APIURL + `/api/fixtures/`);
+    const res = await axios.get(REACT_APP_APIURL + `/api/fixtures/`);
 
     dispatch({
       type: GET_FIXTURES,

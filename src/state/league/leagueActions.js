@@ -14,7 +14,7 @@ export const getLeague = (leagueId) => async (dispatch) => {
     type: CLEAR_LEAGUE,
   });
   try {
-    const res = await axios.get(process.env.APIURL + `/api/league/${leagueId}`);
+    const res = await axios.get(REACT_APP_APIURL + `/api/league/${leagueId}`);
 
     dispatch({
       type: GET_LEAGUE,
@@ -38,7 +38,7 @@ export const createLeague = (formData) => async (dispatch) => {
     };
 
     const res = await axios.post(
-      process.env.APIURL + "/api/league/create",
+      REACT_APP_APIURL + "/api/league/create",
       formData,
       config
     );
@@ -61,7 +61,7 @@ export const joinLeague = (formData) => async (dispatch) => {
     };
 
     const res = await axios.post(
-      process.env.APIURL + "/api/league/join",
+      REACT_APP_APIURL + "/api/league/join",
       formData,
       config
     );
@@ -84,7 +84,7 @@ export const checkRostersLock = (league_id) => async (dispatch) => {
     };
 
     const res = await axios.get(
-      process.env.APIURL + `/api/league/rosters/lock/check`,
+      REACT_APP_APIURL + `/api/league/rosters/lock/check`,
       {
         params: { league_id: league_id },
       }
@@ -101,7 +101,7 @@ export const checkRostersLock = (league_id) => async (dispatch) => {
 export const addToLineup = (league_id, player_id) => async (dispatch) => {
   try {
     const res = await axios.post(
-      process.env.APIURL + `/api/league/${league_id}/lineup/add/${player_id}`
+      REACT_APP_APIURL + `/api/league/${league_id}/lineup/add/${player_id}`
     );
     await dispatch({
       type: UPDATE_LEAGUE,
@@ -118,7 +118,7 @@ export const addToLineup = (league_id, player_id) => async (dispatch) => {
 export const dropFromLineup = (league_id, player_id) => async (dispatch) => {
   try {
     const res = await axios.post(
-      process.env.APIURL + `/api/league/${league_id}/lineup/drop/${player_id}`
+      REACT_APP_APIURL + `/api/league/${league_id}/lineup/drop/${player_id}`
     );
     await dispatch({
       type: UPDATE_LEAGUE,

@@ -10,7 +10,7 @@ export const getRoster = (league_id, player_id) => async (dispatch) => {
   });
   try {
     const res = await axios.get(
-      process.env.APIURL + `/api/league/${league_id}/roster/${player_id}`
+      REACT_APP_APIURL + `/api/league/${league_id}/roster/${player_id}`
     );
 
     dispatch({
