@@ -41,6 +41,11 @@ const App = () => {
           <Route exact path="/player/:id/" element={<Player />} />
           <Route
             exact
+            path="/league/:id/schedule/:fixture_id"
+            element={<LeagueFixture />}
+          />
+          <Route
+            exact
             path="/dashboard"
             element={<PrivateRoute component={Dashboard} />}
           />
@@ -64,11 +69,7 @@ const App = () => {
             path="/league/:id/*"
             element={<PrivateRoute component={League} />}
           />
-          <Route
-            exact
-            path="/league/:id/schedule/:fixture_id"
-            element={<PrivateRoute component={LeagueFixture} />}
-          />
+
           <Route exact path="/" element={<Landing />} />
         </Routes>
       </Router>
