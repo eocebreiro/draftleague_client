@@ -65,8 +65,10 @@ const index = ({
   const positionOptions = [];
   const teamList = [];
   const positionList = [];
+  let show = true;
   if (players === null || players.length === 0) {
-    playerList = <Fragment>There are no players for this team</Fragment>;
+    playerList.push(<Fragment>There are no players for this week</Fragment>);
+    show = false;
   } else {
     //*** Drop Down menu list before filtering the players */
     for (let i = 0; i < players.length; i++) {
@@ -196,11 +198,12 @@ const index = ({
         </TableRow>
       );
     });
-
-    return loading || players === null ? (
-      <Spinner />
-    ) : (
-      <Fragment>
+  }
+  return loading || players === null ? (
+    <Spinner />
+  ) : (
+    <Fragment>
+      {show && (
         <Div>
           <select name="position" onChange={(e) => onChange(e)}>
             {positionOptions}
@@ -209,24 +212,24 @@ const index = ({
             {teamOptions}
           </select>
         </Div>
-        <Table>
-          <TableRowHeader>
-            <TableHeader style={{ width: widthItem }}>Name</TableHeader>
-            <TableHeader style={{ width: widthItem }}>Club</TableHeader>
-            <TableHeader style={{ width: widthItem }}>Position</TableHeader>
-          </TableRowHeader>
-          {playerList === 0
-            ? "No new players for this search result"
-            : playerList}
-        </Table>
-      </Fragment>
-    );
-  }
+      )}
+      <Table>
+        <TableRowHeader>
+          <TableHeader style={{ width: widthItem }}>Name</TableHeader>
+          <TableHeader style={{ width: widthItem }}>Club</TableHeader>
+          <TableHeader style={{ width: widthItem }}>Position</TableHeader>
+        </TableRowHeader>
+        {playerList.length === 0
+          ? "No new players for this search result"
+          : playerList}
+      </Table>
+    </Fragment>
+  );
 };
 
 index.propTypes = {
   getNewPlayers: PropTypes.func.isRequired,
-  players: PropTypes.object.isRequired,
+  players: PropTypes.array.isRequired,
   league: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
