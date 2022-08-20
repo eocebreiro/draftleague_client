@@ -59,7 +59,9 @@ const index = ({ playerInfo }) => {
             {info.stats.total_points}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.minutes.data}</p>
+            <p>
+              {info.stats.minutes.data !== null ? info.stats.minutes.data : 0}
+            </p>
             {info.stats.minutes.score === 0 ? (
               <p>-</p>
             ) : (
@@ -67,7 +69,7 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.goals.data}</p>
+            <p>{info.stats.goals.data !== null ? info.stats.goals.data : 0}</p>
             {info.stats.goals.score === 0 ? (
               <p>-</p>
             ) : (
@@ -75,7 +77,9 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.assists.data}</p>
+            <p>
+              {info.stats.assists.data !== null ? info.stats.assists.data : 0}
+            </p>
             {info.stats.assists.score === 0 ? (
               <p>-</p>
             ) : (
@@ -83,7 +87,11 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.cleansheet.data}</p>
+            <p>
+              {info.stats.cleansheet.data !== null
+                ? info.stats.cleansheet.data
+                : 0}
+            </p>
             {info.stats.cleansheet.score === 0 ? (
               <p>-</p>
             ) : (
@@ -91,7 +99,11 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.pen_saved.data}</p>
+            <p>
+              {info.stats.pen_saved.data !== null
+                ? info.stats.pen_saved.data
+                : 0}
+            </p>
             {info.stats.pen_saved.score === 0 ? (
               <p>-</p>
             ) : (
@@ -99,7 +111,9 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.pen_won.data}</p>
+            <p>
+              {info.stats.pen_won.data !== null ? info.stats.pen_won.data : 0}
+            </p>
             {info.stats.pen_won.score === 0 ? (
               <p>-</p>
             ) : (
@@ -107,7 +121,11 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.pen_missed.data}</p>
+            <p>
+              {info.stats.pen_missed.data !== null
+                ? info.stats.pen_missed.data
+                : 0}
+            </p>
             {info.stats.pen_missed.score === 0 ? (
               <p>-</p>
             ) : (
@@ -115,7 +133,11 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.goals_conceded.data}</p>
+            <p>
+              {info.stats.goals_conceded.data !== null
+                ? info.stats.goals_conceded.data
+                : 0}
+            </p>
             {info.stats.goals_conceded.score === 0 ? (
               <p>-</p>
             ) : (
@@ -123,7 +145,7 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.saves.data}</p>
+            <p>{info.stats.saves.data !== null ? info.stats.saves.data : 0}</p>
             {info.stats.saves.score === 0 ? (
               <p>-</p>
             ) : (
@@ -131,7 +153,11 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.yellow_card.data}</p>
+            <p>
+              {info.stats.yellow_card.data !== null
+                ? info.stats.yellow_card.data
+                : 0}
+            </p>
             {info.stats.yellow_card.score === 0 ? (
               <p>-</p>
             ) : (
@@ -139,7 +165,9 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.red_card.data}</p>
+            <p>
+              {info.stats.red_card.data !== null ? info.stats.red_card.data : 0}
+            </p>
             {info.stats.red_card.score === 0 ? (
               <p>-</p>
             ) : (
@@ -147,7 +175,9 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.own_goal.data}</p>
+            <p>
+              {info.stats.own_goal.data !== null ? info.stats.own_goal.data : 0}
+            </p>
             {info.stats.own_goal.score === 0 ? (
               <p>-</p>
             ) : (
@@ -155,7 +185,9 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.tackles.data}</p>
+            <p>
+              {info.stats.tackles.data !== null ? info.stats.tackles.data : 0}
+            </p>
             {info.stats.tackles.score === 0 ? (
               <p>-</p>
             ) : (
@@ -163,7 +195,9 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.passes.data}</p>
+            <p>
+              {info.stats.passes.data !== null ? info.stats.passes.data : 0}
+            </p>
             {info.stats.passes.score === 0 ? (
               <p>-</p>
             ) : (
@@ -171,7 +205,11 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.key_passes.data}</p>
+            <p>
+              {info.stats.key_passes.data !== null
+                ? info.stats.key_passes.data
+                : 0}
+            </p>
             {info.stats.key_passes.score === 0 ? (
               <p>-</p>
             ) : (
@@ -179,7 +217,11 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.crosses_accuracy.data}</p>
+            <p>
+              {info.stats.crosses_accuracy.data !== null
+                ? info.stats.crosses_accuracy.data
+                : 0}
+            </p>
             {info.stats.crosses_accuracy.score === 0 ? (
               <p>-</p>
             ) : (
@@ -187,7 +229,11 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.clearance.data}</p>
+            <p>
+              {info.stats.clearance.data !== null
+                ? info.stats.clearance.data
+                : 0}
+            </p>
             {info.stats.clearance.score === 0 ? (
               <p>-</p>
             ) : (
@@ -195,7 +241,9 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.blocks.data}</p>
+            <p>
+              {info.stats.blocks.data !== null ? info.stats.blocks.data : 0}
+            </p>
             {info.stats.blocks.score === 0 ? (
               <p>-</p>
             ) : (
@@ -203,7 +251,11 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.interceptions.data}</p>
+            <p>
+              {info.stats.interceptions.data !== null
+                ? info.stats.interceptions.data
+                : 0}
+            </p>
             {info.stats.interceptions.score === 0 ? (
               <p>-</p>
             ) : (
@@ -211,7 +263,7 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.shots.data}</p>
+            <p>{info.stats.shots.data !== null ? info.stats.shots.data : 0}</p>
             {info.stats.shots.score === 0 ? (
               <p>-</p>
             ) : (
@@ -219,7 +271,11 @@ const index = ({ playerInfo }) => {
             )}
           </TableItem>
           <TableItem style={{ width: tableItemSize }}>
-            <p>{info.stats.fouls_drawn.data}</p>
+            <p>
+              {info.stats.fouls_drawn.data !== null
+                ? info.stats.fouls_drawn.data
+                : 0}
+            </p>
             {info.stats.fouls_drawn.score === 0 ? (
               <p>-</p>
             ) : (
