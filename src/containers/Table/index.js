@@ -25,6 +25,7 @@ const index = ({ league: { league }, fixtures: { fixtures } }) => {
   let players = [];
   let width = "50px";
   let prevRankingIndex = null;
+  let currentRankingIndex = league.activeWeek;
   let arrow;
 
   // check to see if the week has started.
@@ -40,94 +41,80 @@ const index = ({ league: { league }, fixtures: { fixtures } }) => {
 
     if (league.ranking[i].week === league.activeWeek - offset) {
       prevRankingIndex = i;
+      currentRankingIndex = i + 1;
       break;
     }
   }
 
-  for (let i = 0; i < league.ranking.length; i++) {
-    // Get last weeks results and ranking
+  // Get last weeks results and ranking
 
-    if (league.ranking[i].week === league.activeWeek) {
-      for (let j = 0; j < league.ranking[i].players.length; j++) {
-        if (prevRankingIndex !== null) {
-          for (
-            let k = 0;
-            k < league.ranking[prevRankingIndex].players.length;
-            k++
-          ) {
-            if (
-              league.ranking[i].players[j].user_id ===
-              league.ranking[prevRankingIndex].players[k].user_id
-            ) {
-              if (
-                league.ranking[i].players[j].rank <
-                league.ranking[prevRankingIndex].players[k].rank
-              ) {
-                arrow = (
-                  <FontAwesomeIcon
-                    style={{ color: "green" }}
-                    icon={faArrowUp}
-                  />
-                );
-              } else if (
-                league.ranking[i].players[j].rank >
-                league.ranking[prevRankingIndex].players[k].rank
-              ) {
-                arrow = (
-                  <FontAwesomeIcon
-                    style={{ color: "red" }}
-                    icon={faArrowDown}
-                  />
-                );
-              } else {
-                arrow = <FontAwesomeIcon icon={faMinus} />;
-              }
-            }
-          }
-        } else {
+  for (let j = 0; j < league.ranking[currentRankingIndex].players.length; j++) {
+    if (prevRankingIndex !== null) {
+      for (
+        let k = 0;
+        k < league.ranking[prevRankingIndex].players.length;
+        k++
+      ) {
+        if (
+          league.ranking[currentRankingIndex].players[j].user_id ===
+          league.ranking[prevRankingIndex].players[k].user_id
+        ) {
           if (
-            league.ranking[i].players[j].wins === 1 ||
-            league.ranking[i].players[j].draws === 1
+            league.ranking[currentRankingIndex].players[j].rank <
+            league.ranking[prevRankingIndex].players[k].rank
           ) {
             arrow = (
               <FontAwesomeIcon style={{ color: "green" }} icon={faArrowUp} />
             );
-          } else {
+          } else if (
+            league.ranking[currentRankingIndex].players[j].rank >
+            league.ranking[prevRankingIndex].players[k].rank
+          ) {
             arrow = (
               <FontAwesomeIcon style={{ color: "red" }} icon={faArrowDown} />
             );
+          } else {
+            arrow = <FontAwesomeIcon icon={faMinus} />;
           }
         }
-        players.push(
-          <TableRow>
-            <TableItem style={{ width: "20px" }}>{arrow}</TableItem>
-
-            <TableItem style={{ width: width }}>
-              {league.ranking[i].players[j].rank}
-            </TableItem>
-            <TableItem style={{ width: "150px" }}>
-              {league.ranking[i].players[j].teamname}
-            </TableItem>
-            <TableItem style={{ width: width }}>
-              {league.ranking[i].players[j].wins}
-            </TableItem>
-            <TableItem style={{ width: width }}>
-              {league.ranking[i].players[j].draws}
-            </TableItem>
-            <TableItem style={{ width: width }}>
-              {league.ranking[i].players[j].losses}
-            </TableItem>
-            <TableItem style={{ width: width }}>
-              {league.ranking[i].players[j].league_points}
-            </TableItem>
-            <TableItem style={{ width: width }}>
-              {league.ranking[i].players[j].total_points}
-            </TableItem>
-          </TableRow>
-        );
       }
-      break;
+    } else {
+      if (
+        league.ranking[currentRankingIndex].players[j].wins === 1 ||
+        league.ranking[currentRankingIndex].players[j].draws === 1
+      ) {
+        arrow = <FontAwesomeIcon style={{ color: "green" }} icon={faArrowUp} />;
+      } else {
+        arrow = <FontAwesomeIcon style={{ color: "red" }} icon={faArrowDown} />;
+      }
     }
+    players.push(
+      <TableRow>
+        <TableItem style={{ width: "20px" }}>{arrow}</TableItem>
+
+        <TableItem style={{ width: width }}>
+          {league.ranking[currentRankingIndex].players[j].rank}
+        </TableItem>
+        <TableItem style={{ width: "150px" }}>
+          {league.ranking[currentRankingIndex].players[j].teamname}
+        </TableItem>
+        <TableItem style={{ width: width }}>
+          {league.ranking[currentRankingIndex].players[j].wins}
+        </TableItem>
+        <TableItem style={{ width: width }}>
+          {league.ranking[currentRankingIndex].players[j].draws}
+        </TableItem>
+        <TableItem style={{ width: width }}>
+          {league.ranking[currentRankingIndex].players[j].losses}
+        </TableItem>
+        <TableItem style={{ width: width }}>
+          {league.ranking[currentRankingIndex].players[j].league_points}
+        </TableItem>
+        <TableItem style={{ width: width }}>
+          {league.ranking[currentRankingIndex].players[j].total_points}
+        </TableItem>
+      </TableRow>
+    );
   }
 
   if (players.length === 0) {
