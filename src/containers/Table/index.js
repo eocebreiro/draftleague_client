@@ -32,7 +32,7 @@ const index = ({ league: { league }, fixtures: { fixtures } }) => {
   if (fixtures.hasStarted) {
     offset = 1;
   } else {
-    offset = -2;
+    offset = 2;
   }
 
   for (let i = 0; i < league.ranking.length; i++) {
