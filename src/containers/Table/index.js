@@ -21,15 +21,24 @@ import {
   TableRowHeader,
 } from "../../components/Table";
 
-const index = ({ league: { league } }) => {
+const index = ({ league: { league }, fixtures: { fixtures } }) => {
   let players = [];
   let width = "50px";
   let prevRankingIndex = null;
   let arrow;
 
+  // check to see if the week has started.
+  let offset;
+  if (fixtures.hasStarted) {
+    offset = 1;
+  } else {
+    offset = -2;
+  }
+
   for (let i = 0; i < league.ranking.length; i++) {
     // Check to see if there was a match before
-    if (league.ranking[i].week === league.activeWeek - 1) {
+
+    if (league.ranking[i].week === league.activeWeek - offset) {
       prevRankingIndex = i;
       break;
     }
@@ -159,10 +168,12 @@ const index = ({ league: { league } }) => {
 index.propTypes = {
   league: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  fixtures: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   league: state.league,
+  fixtures: state.fixtures,
   auth: state.auth,
 });
 
