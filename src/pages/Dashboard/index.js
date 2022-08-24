@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentProfile } from "../../state/profile/profileActions";
 import { getLeagues } from "../../state/leagues/leaguesActions";
+import { getFixtures } from "../../state/fixtures/fixturesActions";
 
 //Font Awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -29,12 +30,14 @@ import League from "./League";
 const index = ({
   getCurrentProfile,
   getLeagues,
+  getFixtures,
   auth: { user },
   profile: { profile, loading },
   leagues: { leagues },
 }) => {
   useEffect(() => {
     getCurrentProfile();
+    getFixtures();
   }, []);
 
   useEffect(() => {
@@ -92,6 +95,7 @@ index.propTypes = {
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
   leagues: PropTypes.array.isRequired,
+  getFixtures: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -100,6 +104,8 @@ const mapStateToProps = (state) => ({
   leagues: state.leagues,
 });
 
-export default connect(mapStateToProps, { getCurrentProfile, getLeagues })(
-  index
-);
+export default connect(mapStateToProps, {
+  getCurrentProfile,
+  getLeagues,
+  getFixtures,
+})(index);

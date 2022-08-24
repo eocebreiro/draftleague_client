@@ -9,7 +9,12 @@ import Link from "../../components/Link";
 import { getRoster } from "../../state/roster/rosterActions";
 import { getLeague } from "../../state/league/leagueActions";
 
-const League = ({ auth: { user }, league, getLeague }) => {
+const League = ({
+  auth: { user },
+  league,
+  getLeague,
+  fixtures: { fixtures },
+}) => {
   const onClick = async (league_id, e) => {
     getLeague(league_id);
     getRoster(league_id, user._id);
@@ -22,10 +27,16 @@ const League = ({ auth: { user }, league, getLeague }) => {
   let team2Winning = false;
   let rank = null;
   // Check to see if league is not full;
-  if (league.participantsFull) {
+  if (league.participantsFull && fixtures !== null) {
+    console.log("IN HERE");
     // Get Rank
 
+    // if week has started, get current week rankings
+    // If not, get last week rankings
     let index = league.ranking.length - 1;
+    if (!fixtures.hasStarted) {
+      index = league.ranking.length - 2;
+    }
     for (let i = 0; i < league.ranking[index].players.length; i++) {
       if (league.ranking[index].players[i].user_id === user._id) {
         rank = league.ranking[index].players[i].rank;
@@ -173,12 +184,14 @@ const League = ({ auth: { user }, league, getLeague }) => {
 
 League.propTypes = {
   league: PropTypes.array.isRequired,
+  fixtures: PropTypes.object.isRequired,
   getLeague: PropTypes.func.isRequired,
   getRoster: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  fixtures: state.fixtures,
 });
 
 export default connect(mapStateToProps, { getRoster, getLeague })(League);
