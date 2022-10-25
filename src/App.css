@@ -1,0 +1,42 @@
+.container-custom {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  min-height: 100vh;
+  background: transparent;
+}
+
+/* Landing CSS */
+
+.landing {
+  background: url("./img/showcase.jpg") no-repeat center center/cover;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  row-gap: 50px;
+  justify-content: center;
+  align-items: center;
+}
+
+.darkoverlay {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  color: white;
+}
+
+/* Login and Register Page */
+
+.Auth-form-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.invalid-feedback {
+  text-align: left;
+}

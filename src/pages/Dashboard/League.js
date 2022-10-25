@@ -3,11 +3,33 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import StyledLeague from "./StyledLeague";
 import P from "../../components/P";
-import { LeaguesContent } from "../../components/Div";
+import {
+  LeaguesContent,
+  LeagueNameWrapper,
+  LeagueName,
+  ArrowBox,
+  LeagueDataWrapper,
+  Name,
+  Points,
+  Crest,
+  MatchUpBox,
+  UserInfo,
+  RankData,
+  LeagueData,
+  InviteBox,
+  Team1,
+  Team2,
+  Team1Name,
+  Team2Name,
+} from "../../components/Div";
 import { TableItem } from "../../components/Table";
-import Link from "../../components/Link";
+import { Link } from "react-router-dom";
 import { getRoster } from "../../state/roster/rosterActions";
 import { getLeague } from "../../state/league/leagueActions";
+import { Button } from "../../components/Button";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 const League = ({
   auth: { user },
@@ -28,7 +50,6 @@ const League = ({
   let rank = null;
   // Check to see if league is not full;
   if (league.participantsFull && fixtures !== null) {
-    console.log("IN HERE");
     // Get Rank
 
     // if week has started, get current week rankings
@@ -91,93 +112,83 @@ const League = ({
   }
 
   return league.participantsFull ? (
-    <LeaguesContent style={{ margin: "1px" }} key={league._id}>
-      <Link
-        to={"/league/" + league._id}
-        onClick={(e) => onClick(league._id, e)}
-      >
-        <StyledLeague>
-          <TableItem
-            style={{
-              width: "250px",
-              borderRight: "1px solid black",
-              fontWeight: "700",
-            }}
+    <LeaguesContent key={league._id}>
+      <LeagueNameWrapper>
+        <LeagueName>
+          <Link
+            to={"/league/" + league._id}
+            onClick={(e) => onClick(league._id, e)}
           >
             <P color="black">{league.leaguename}</P>
-          </TableItem>
-          <TableItem style={{ width: "250px" }}>
-            <P color="black">{team1}</P>
-          </TableItem>
-          <TableItem style={{ width: "250px" }}>
-            <P
-              style={{
-                display: "flex",
-                flexGrow: "1",
-                width: "100%",
-                justifyContent: "space-around",
-              }}
-              color="black"
+          </Link>
+        </LeagueName>
+        <ArrowBox>
+          <Link
+            to={"/league/" + league._id}
+            onClick={(e) => onClick(league._id, e)}
+          >
+            <FontAwesomeIcon icon={faAngleRight} size="lg" />
+          </Link>
+        </ArrowBox>
+      </LeagueNameWrapper>
+      <LeagueDataWrapper>
+        <LeagueData>
+          <Team1>
+            <Crest></Crest>
+            <Name>
+              <P color="black">{team1}</P>
+            </Name>
+            <Points>{team1Score === null ? "--" : team1Score}</Points>
+          </Team1>
+          <MatchUpBox>
+            <Link
+              to={"/league/" + league._id + "/fixture/"}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <span style={{ fontWeight: team1Winning && "700" }}>
-                {team1Score === null ? "--" : team1Score}
-              </span>
-              <span>{" vs "}</span>
-              <span style={{ fontWeight: team2Winning && "700" }}>
-                {team2Score === null ? "--" : team2Score}
-              </span>
-            </P>
-          </TableItem>
-          <TableItem style={{ width: "250px" }}>
-            <P color="black">{team2}</P>
-          </TableItem>
-          <TableItem style={{ width: "250px", borderLeft: "1px solid black" }}>
-            <P style={{ padding: "0" }} color="black">
-              League Rank
-            </P>
-            <P style={{ padding: "0" }} color="black">
-              {rank !== null ? rank + " / " + league.numOfParticipants : "--"}
-            </P>
-          </TableItem>
-        </StyledLeague>
-      </Link>
-    </LeaguesContent>
-  ) : (
-    <LeaguesContent key={league._id}>
-      <StyledLeague>
-        <TableItem
-          style={{
-            width: "250px",
-            borderRight: "1px solid black",
-            fontWeight: "700",
-          }}
-        >
-          <P color="black">{league.leaguename}</P>
-        </TableItem>
-        <TableItem style={{ width: "750px" }}>
-          <P style={{ padding: "0" }} color="black">
-            Invite your friends!
-          </P>
-          <P style={{ padding: "0" }} color="black">
-            League Code:{" "}
-            <span style={{ color: "blue" }}>{league.leagueId}</span>
-          </P>
-          <P style={{ padding: "0" }} color="black">
-            {league.participants.length +
-              " / " +
-              league.numOfParticipants +
-              " players"}
-          </P>
-        </TableItem>
-        <TableItem style={{ width: "250px", borderLeft: "1px solid black" }}>
+              <Button color="primary">Match Up</Button>
+            </Link>
+          </MatchUpBox>
+          <Team2>
+            <Points>{team2Score === null ? "--" : team2Score}</Points>
+            <Name>
+              <P color="black">{team2}</P>
+            </Name>
+            <Crest></Crest>
+          </Team2>
+        </LeagueData>
+        <RankData>
           <P style={{ padding: "0" }} color="black">
             League Rank
           </P>
           <P style={{ padding: "0" }} color="black">
             {rank !== null ? rank + " / " + league.numOfParticipants : "--"}
           </P>
-        </TableItem>
-      </StyledLeague>
+        </RankData>
+      </LeagueDataWrapper>
+    </LeaguesContent>
+  ) : (
+    <LeaguesContent key={league._id}>
+      <LeagueNameWrapper>
+        <LeagueName>
+          <P color="black">{league.leaguename}</P>
+        </LeagueName>
+        <ArrowBox></ArrowBox>
+      </LeagueNameWrapper>
+      <InviteBox>
+        <P style={{ padding: "0" }} color="black">
+          Invite your friends!
+        </P>
+        <P style={{ padding: "0" }} color="black">
+          League Code: <span style={{ color: "blue" }}>{league.leagueId}</span>
+        </P>
+        <P style={{ padding: "0" }} color="black">
+          {league.participants.length +
+            " / " +
+            league.numOfParticipants +
+            " players"}
+        </P>
+      </InviteBox>
     </LeaguesContent>
   );
 };

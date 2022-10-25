@@ -8,33 +8,16 @@ import { register } from "../../state/auth/authActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-//Styling Components
-import {
-  Container,
-  LandingImg,
-  DarkOverlay,
-  LandingContent,
-} from "../../components/Div";
-
-import H1 from "../../components/H1";
-import P from "../../components/P";
-import Form from "../../components/FormItems/Form";
-import FormGroup from "../../components/FormItems/FormGroup";
-import Input from "../../components/FormItems/Input";
-import Error from "../../components/FormItems/Error";
-import { Button } from "../../components/Button";
-
 const index = ({ register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     password2: "",
-    isNameMissing: false,
-    isPassword2Missing: false,
-    isErrLength: false,
-    isErrMatch: false,
-    isErrEmail: false,
+    nameFeedback: "",
+    password2Feedback: "",
+    emailFeedback: "",
+    passwordFeedback: "",
   });
 
   const {
@@ -42,11 +25,10 @@ const index = ({ register, isAuthenticated }) => {
     email,
     password,
     password2,
-    isNameMissing,
-    isPassword2Missing,
-    isErrLength,
-    isErrMatch,
-    isErrEmail,
+    nameFeedback,
+    password2Feedback,
+    emailFeedback,
+    passwordFeedback,
   } = formData;
 
   const onChange = (e) =>
@@ -54,14 +36,14 @@ const index = ({ register, isAuthenticated }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault(e);
-    let testLength,
-      testMatch,
-      testEmail,
-      testName,
-      testPassword2,
-      isError = false;
+    let nameFeedback,
+      password2Feedback,
+      emailFeedback,
+      passwordFeedback = "";
+    let isError = false;
+
     if (name.length < 4 || name.length > 30) {
-      testName = true;
+      nameFeedback = "is-invalid";
       isError = true;
     }
     if (
@@ -71,19 +53,15 @@ const index = ({ register, isAuthenticated }) => {
           /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         )
     ) {
-      testEmail = true;
+      emailFeedback = "is-invalid";
       isError = true;
     }
     if (password !== password2) {
-      testMatch = true;
+      password2Feedback = "is-invalid";
       isError = true;
     }
     if (password.length < 6 || password.length > 30) {
-      testLength = true;
-      isError = true;
-    }
-    if (password2 === "") {
-      testPassword2 = true;
+      passwordFeedback = "is-invalid";
       isError = true;
     }
     if (!isError) {
@@ -91,11 +69,10 @@ const index = ({ register, isAuthenticated }) => {
     }
     setFormData({
       ...formData,
-      isNameMissing: testName,
-      isErrEmail: testEmail,
-      isErrLength: testLength,
-      isErrMatch: testMatch,
-      isPassword2Missing: testPassword2,
+      nameFeedback,
+      emailFeedback,
+      passwordFeedback,
+      password2Feedback,
     });
   };
 
@@ -105,17 +82,18 @@ const index = ({ register, isAuthenticated }) => {
   }
 
   return (
-    <LandingImg>
-      <DarkOverlay>
-        <Container>
-          <LandingContent>
-            <H1 size="L">Sign Up</H1>
-            <P size="lead">
+    <div className="landing">
+      <div className="darkoverlay">
+        <div className="Auth-form-container">
+          <div className="col-4 text-center">
+            <h1 className="display-4 mb-3">Sign Up</h1>
+            <p>
               <FontAwesomeIcon icon={faUser} /> Create Your Account
-            </P>
-            <Form align="center">
-              <FormGroup>
-                <Input
+            </p>
+            <form align="center">
+              <div className="mb-3">
+                <input
+                  className={`form-control ${nameFeedback}`}
                   type="text"
                   placeholder="Name"
                   name="name"
@@ -124,14 +102,14 @@ const index = ({ register, isAuthenticated }) => {
                   required
                   autoComplete="on"
                   noValidate
-                  error={isNameMissing}
                 />
-                <Error error={isNameMissing}>
+                <div className="invalid-feedback">
                   *Name must be at least 4 and 30 characters
-                </Error>
-              </FormGroup>
-              <FormGroup>
-                <Input
+                </div>
+              </div>
+              <div className="mb-3">
+                <input
+                  className={`form-control ${emailFeedback}`}
                   type="email"
                   placeholder="Email Address"
                   name="email"
@@ -140,12 +118,12 @@ const index = ({ register, isAuthenticated }) => {
                   required
                   autoComplete="on"
                   noValidate
-                  error={isErrEmail}
                 />
-                <Error error={isErrEmail}>*Email is invalid</Error>
-              </FormGroup>
-              <FormGroup>
-                <Input
+                <div className="invalid-feedback">*Email is invalid</div>
+              </div>
+              <div className="mb-3">
+                <input
+                  className={`form-control ${passwordFeedback}`}
                   type="password"
                   placeholder="Password"
                   name="password"
@@ -154,14 +132,14 @@ const index = ({ register, isAuthenticated }) => {
                   minLength="6"
                   autoComplete="new-password"
                   noValidate
-                  error={isErrLength}
                 />
-                <Error error={isErrLength}>
+                <div className="invalid-feedback">
                   *Password must be at least 6 and 30 characters
-                </Error>
-              </FormGroup>
-              <FormGroup>
-                <Input
+                </div>
+              </div>
+              <div className="mb-3">
+                <input
+                  className={`form-control ${password2Feedback}`}
                   type="password"
                   placeholder="Confirm Password"
                   name="password2"
@@ -170,35 +148,29 @@ const index = ({ register, isAuthenticated }) => {
                   minLength="6"
                   autoComplete="new-password"
                   noValidate
-                  error={isErrMatch || isPassword2Missing}
                 />
-                <Error error={isErrMatch}>*Password must match</Error>
-                <Error error={isPassword2Missing}>
-                  *Confirm password field is required
-                </Error>
-              </FormGroup>
-              <Input
-                type="submit"
-                display="none"
-                onClick={(e) => onSubmit(e)}
-              ></Input>
-              <Button
-                onClick={(e) => onSubmit(e)}
-                type="input"
-                link="/register"
-                color="primary"
-                width="100%"
-              >
-                Submit
-              </Button>
-            </Form>
+                <div className="invalid-feedback">*Password must match</div>
+              </div>
+              <div className="d-grid mb-3">
+                <button
+                  className="btn btn-primary"
+                  onClick={(e) => onSubmit(e)}
+                  type="submit"
+                  link="/register"
+                  color="primary"
+                  width="100%"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
             <p>
               Already have an account? <Link to="/login">Sign In</Link>
             </p>
-          </LandingContent>
-        </Container>
-      </DarkOverlay>
-    </LandingImg>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

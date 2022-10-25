@@ -8,30 +8,22 @@ import { login } from "../../state/auth/authActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-//Styling Components
-import {
-  Container,
-  LandingImg,
-  DarkOverlay,
-  LandingContent,
-} from "../../components/Div";
-import H1 from "../../components/H1";
-import P from "../../components/P";
-import Form from "../../components/FormItems/Form";
-import FormGroup from "../../components/FormItems/FormGroup";
-import Input from "../../components/FormItems/Input";
-import Error from "../../components/FormItems/Error";
-import { Button } from "../../components/Button";
-
 const index = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     isEmailMissing: false,
     isPasswordMissing: false,
+    invalidAuth: false,
   });
 
-  const { email, password, isEmailMissing, isPasswordMissing } = formData;
+  const {
+    email,
+    password,
+    isEmailMissing,
+    isPasswordMissing,
+    invalidAuth,
+  } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -50,12 +42,13 @@ const index = ({ login, isAuthenticated }) => {
       isError = true;
     }
     if (!isError) {
-      login({ email, password });
+      await login({ email, password });
     }
     setFormData({
       ...formData,
       isEmailMissing: testEmail,
       isPasswordMissing: testPassword,
+      invalidAuth: !isAuthenticated && true,
     });
   };
 
@@ -65,66 +58,64 @@ const index = ({ login, isAuthenticated }) => {
   }
 
   return (
-    <LandingImg>
-      <DarkOverlay>
-        <Container>
-          <LandingContent>
-            <H1 size="L">Sign In</H1>
-            <P size="lead">
+    <div className="landing">
+      <div className="darkoverlay">
+        <div className="Auth-form-container">
+          <div className="col-4 text-center ">
+            <h1 className="display-4 mb-3">Sign In</h1>
+            <p>
               <FontAwesomeIcon icon={faUser} /> Sign into Your Account
-            </P>
-            <Form align="center">
-              <FormGroup>
-                <Input
-                  type="email"
-                  placeholder="Email Address"
-                  name="email"
-                  value={email}
-                  onChange={(e) => onChange(e)}
-                  required
-                  autoComplete="on"
-                  noValidate
-                  error={isEmailMissing}
-                />
-                <Error error={isEmailMissing}>*Email field is required</Error>
-              </FormGroup>
-              <FormGroup>
-                <Input
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => onChange(e)}
-                  minLength="6"
-                  autoComplete="current-password"
-                  noValidate
-                  error={isPasswordMissing}
-                />
-                <Error error={isPasswordMissing}>
-                  *Password field is required
-                </Error>
-              </FormGroup>
-              <Input
-                type="submit"
-                display="none"
-                onClick={(e) => onSubmit(e)}
-              ></Input>
-              <Button
-                onClick={(e) => onSubmit(e)}
-                link="/login"
-                color="primary"
-                width="100%"
+            </p>
+            {invalidAuth && (
+              <div
+                className="alert alert-danger mt-3 text-center fw-bold"
+                role="alert"
               >
-                Submit
-              </Button>
-            </Form>
+                Invalid Credentials
+              </div>
+            )}
+            <form align="center">
+              <input
+                className="form-control mb-3"
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) => onChange(e)}
+                required
+                autoComplete="on"
+                noValidate
+                error={isEmailMissing}
+              />
+              <input
+                className="form-control mb-3"
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => onChange(e)}
+                minLength="6"
+                autoComplete="current-password"
+                noValidate
+                error={isPasswordMissing}
+              />
+              <div className="d-grid mb-3">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  onClick={(e) => onSubmit(e)}
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
             <p>
               Don't have an account? <Link to="/register">Sign Up</Link>
             </p>
-          </LandingContent>
-        </Container>
-      </DarkOverlay>
-    </LandingImg>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

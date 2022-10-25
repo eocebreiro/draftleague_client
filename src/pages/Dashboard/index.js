@@ -16,7 +16,7 @@ import {
 
 //Styling Components
 import Spinner from "../../components/Spinner";
-import { Container, Row } from "../../components/Div";
+import { Container, Row, ButtonContainer } from "../../components/Div";
 import P from "../../components/P";
 import H1 from "../../components/H1";
 import { Button } from "../../components/Button";
@@ -56,23 +56,20 @@ const index = ({
   return loading || leagues === null ? (
     <Spinner />
   ) : (
-    <Container>
+    <div className="container">
       {profile !== null ? (
         <Fragment>
-          <H1 size="L">
+          <H1>
             <FontAwesomeIcon icon={faUser} /> Welcome {user && user.name}
           </H1>
-          <Row>
-            {/*<Button link="/edit-profile" color="primary">
-              <FontAwesomeIcon icon={faCircleUser} /> Edit
-      </Button>*/}
+          <ButtonContainer>
             <Button link="/create-league" color="primary">
-              <FontAwesomeIcon icon={faFilePen} /> Create
+              Create A League
             </Button>
             <Button link="/join-league" color="primary">
-              <FontAwesomeIcon icon={faPlus} /> Join
+              Join A League
             </Button>
-          </Row>
+          </ButtonContainer>
 
           {leagueList.length >= 1 ? (
             leagueList
@@ -85,7 +82,7 @@ const index = ({
       ) : (
         <CreateProfile />
       )}
-    </Container>
+    </div>
   );
 };
 

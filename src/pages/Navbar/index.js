@@ -1,6 +1,11 @@
 import React, { Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFutbol, faSignOut, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFutbol,
+  faSignOut,
+  faUser,
+  faCircleUser,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -9,51 +14,43 @@ import { logout } from "../../state/auth/authActions";
 import "./nav-structure.css";
 
 const index = ({ auth: { isAuthenticated, loading }, logout }) => {
-  const authLinks = (
-    <ul className="menu">
-      <li>
-        <Link to="/dashboard">
-          <FontAwesomeIcon icon={faUser} /> Dashboard
+  let navbar = null;
+  if (isAuthenticated) {
+    navbar = (
+      <nav className="bg-dark navbar fixed-top ps-5 pe-5">
+        <Link to="/">
+          <h5>
+            <FontAwesomeIcon icon={faFutbol} /> Draft League
+          </h5>
         </Link>
-      </li>
-      <li>
-        <Link to="/login" onClick={logout}>
-          <FontAwesomeIcon icon={faSignOut} /> Logout
-        </Link>
-      </li>
-    </ul>
-  );
-
-  const guestLinks = (
-    <ul className="menu">
-      <li>
-        <Link to="/about">About</Link>
-      </li>
-      <li>
-        <Link to="/register">Sign Up</Link>
-      </li>
-      <li>
-        <Link to="/login">Login</Link>
-      </li>
-    </ul>
-  );
-
-  return (
-    <nav className="top-nav">
-      <Link to="/">
-        <h1>
-          <FontAwesomeIcon icon={faFutbol} /> Draft League
-        </h1>
-      </Link>
-      <input id="menu-toggle" type="checkbox" />
-      <label className="menu-button-container" htmlFor="menu-toggle">
-        <div className="menu-button"></div>
-      </label>
-      {!loading && (
-        <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
-      )}
-    </nav>
-  );
+        <input id="menu-toggle" type="checkbox" />
+        <label className="menu-button-container" htmlFor="menu-toggle">
+          <div className="menu-button"></div>
+        </label>
+        <ul className="menu">
+          <li>
+            <Link to="/dashboard">
+              <FontAwesomeIcon icon={faUser} />{" "}
+              <span className="d-none d-md-inline">Dashboard</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/edit-profile" color="primary">
+              <FontAwesomeIcon icon={faCircleUser} />{" "}
+              <span className="d-none d-md-inline">Edit Profile</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/login" onClick={logout}>
+              <FontAwesomeIcon icon={faSignOut} />{" "}
+              <span className="d-none d-md-inline">Logout</span>
+            </Link>
+          </li>
+        </ul>
+      </nav>
+    );
+  }
+  return navbar;
 };
 
 index.propTypes = {

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { device } from "../utils/device";
 import {
   handleColorType,
   handleDesktopSizeType,
@@ -6,13 +7,24 @@ import {
 } from "../utils/handleType";
 
 const H1 = styled.h1`
-  font-size: ${(props) => handleDesktopSizeType(props.size)};
+  font-size: 3rem;
   color: ${(props) => handleColorType(props.color)};
-  padding: 0.5rem;
   line-height: 1.2;
-  margin-bottom: 1rem;
-  @media (max-width: 700px) {
-    font-size: ${(props) => handleMediaSizeType(props.size)};
+  padding-bottom: 20px;
+  @media ${device.laptop} {
+    font-size: 3rem;
+  }
+  @media ${device.tablet} {
+    font-size: 3rem;
+  }
+  @media ${device.mobileL} {
+    font-size: 2.4rem;
+  }
+  @media ${device.mobile} {
+    font-size: 2.4rem;
+  }
+  @media ${device.mobileS} {
+    font-size: 1.6rem;
   }
 `;
 
