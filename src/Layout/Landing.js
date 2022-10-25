@@ -6,7 +6,7 @@ import { Link, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 // Styles
-import { AuthFormContainer, DarkOverlay, LandingImg } from "../Styles";
+import { LandingContainer, DarkOverlay, LandingImg } from "../Styles";
 
 const Landing = ({ isAuthenticated }) => {
   // Redirect if logged in
@@ -17,7 +17,7 @@ const Landing = ({ isAuthenticated }) => {
   return (
     <LandingImg>
       <DarkOverlay>
-        <AuthFormContainer>
+        <LandingContainer>
           <div className="text-center">
             <h1 className="display-1">Draft League</h1>
             <p className="lead">Draft a team and compete with others</p>
@@ -28,7 +28,7 @@ const Landing = ({ isAuthenticated }) => {
               Login
             </Link>
           </div>
-        </AuthFormContainer>
+        </LandingContainer>
       </DarkOverlay>
     </LandingImg>
   );

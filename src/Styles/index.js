@@ -25,10 +25,14 @@ export const DarkOverlay = styled.div`
   justify-content: center;
 `;
 
-export const AuthFormContainer = styled.div`
+export const LandingContainer = styled.div`
   width: 100%;
-  max-width: 500px;
+  max-width: 1200px;
   padding-top: 5rem;
   padding-right: 2.5rem;
   padding-left: 2.5rem;
+`;
+
+export const AuthFormContainer = styled(LandingContainer)`
+  max-width: 500px;
 `;
