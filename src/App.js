@@ -6,10 +6,7 @@ import "./App.css";
 
 import GlobalStyle from "./components/GlobalStyle";
 import PrivateRoute from "./components/PrivateRoute";
-import Navbar from "./pages/Navbar";
-import Landing from "./pages/Landing";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
+
 import Dashboard from "./pages/Dashboard";
 import EditProfile from "./pages/EditProfile";
 import CreateLeague from "./pages/CreateLeague";
@@ -17,6 +14,12 @@ import JoinLeague from "./pages/JoinLeague";
 import League from "./pages/League";
 import Player from "./pages/Player";
 import LeagueFixture from "./pages/LeagueFixture";
+
+// Layout
+import Navbar from "./Layout/Navbar";
+import Landing from "./Layout/Landing";
+import Register from "./Layout/Register";
+import Login from "./Layout/Login";
 
 //Redux
 import { Provider } from "react-redux";

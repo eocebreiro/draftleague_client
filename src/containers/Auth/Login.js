@@ -4,11 +4,14 @@ import { Link, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "../../state/auth/authActions";
 
+// Styles
+import { AuthFormContainer, DarkOverlay, LandingImg } from "./Styles";
+
 //Font Awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-const index = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -58,12 +61,12 @@ const index = ({ login, isAuthenticated }) => {
   }
 
   return (
-    <div className="landing">
-      <div className="darkoverlay">
-        <div className="Auth-form-container">
-          <div className="col-4 text-center ">
+    <LandingImg>
+      <DarkOverlay>
+        <AuthFormContainer>
+          <div className="text-center">
             <h1 className="display-4 mb-3">Sign In</h1>
-            <p>
+            <p className="lead">
               <FontAwesomeIcon icon={faUser} /> Sign into Your Account
             </p>
             {invalidAuth && (
@@ -113,13 +116,13 @@ const index = ({ login, isAuthenticated }) => {
               Don't have an account? <Link to="/register">Sign Up</Link>
             </p>
           </div>
-        </div>
-      </div>
-    </div>
+        </AuthFormContainer>
+      </DarkOverlay>
+    </LandingImg>
   );
 };
 
-index.propTypes = {
+Login.propTypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
 };
@@ -128,4 +131,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { login })(index);
+export default connect(mapStateToProps, { login })(Login);
