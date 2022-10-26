@@ -1,28 +1,30 @@
-import React, { Fragment, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import PropTypes from "prop-types";
+
+// Redux
 import { connect } from "react-redux";
 import { getCurrentProfile } from "../../state/profile/profileActions";
 import { getLeagues } from "../../state/leagues/leaguesActions";
 import { getFixtures } from "../../state/fixtures/fixturesActions";
 
+// Style
+import { Container, DashNavDesktop, DashNavMobile } from "../../Styles";
+
 //Font Awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faCaretDown,
   faUser,
   faPlus,
   faCircleUser,
   faFilePen,
 } from "@fortawesome/free-solid-svg-icons";
 
-//Styling Components
-import Spinner from "../../components/Spinner";
-import { Container, Row, ButtonContainer } from "../../components/Div";
-import P from "../../components/P";
-import H1 from "../../components/H1";
-import { Button } from "../../components/Button";
-
-// Other containers
+// Components
+import JoinLeague from "../JoinLeague";
+import CreateLeague from "../CreateLeague";
 import CreateProfile from "../CreateProfile";
+import Spinner from "../../components/Spinner";
 
 // local components
 import League from "./League";
@@ -35,11 +37,13 @@ const index = ({
   profile: { profile, loading },
   leagues: { leagues },
 }) => {
+  // Load user profile
   useEffect(() => {
     getCurrentProfile();
     getFixtures();
   }, []);
 
+  // if user has a profile, load the leagues they are in
   useEffect(() => {
     if (user !== null) {
       getLeagues(user._id);
@@ -53,36 +57,171 @@ const index = ({
     }
   }
 
+  // State of tabs (dashboard nav)
+  const [active, setActive] = useState({
+    myLeaguesTab: "active",
+    createTab: "",
+    joinTab: "",
+  });
+
+  const { myLeaguesTab, createTab, joinTab } = active;
+
+  const handleActive = (e) => {
+    e.preventDefault();
+    setActive({
+      myLeaguesTab: "",
+      createTab: "",
+      joinTab: "",
+      [e.currentTarget.name]: "active",
+    });
+  };
+
   return loading || leagues === null ? (
     <Spinner />
   ) : (
-    <div className="container">
+    <Container className="container">
       {profile !== null ? (
         <Fragment>
-          <H1>
-            <FontAwesomeIcon icon={faUser} /> Welcome {user && user.name}
-          </H1>
-          <ButtonContainer>
-            <Button link="/create-league" color="primary">
-              Create A League
-            </Button>
-            <Button link="/join-league" color="primary">
-              Join A League
-            </Button>
-          </ButtonContainer>
+          {/* Dashboard Desktop Nav Bar view */}
+          <DashNavDesktop>
+            <ul className="nav nav-pills nav-fill mb-3" role="tablist">
+              <li className="nav-item">
+                <button
+                  className={`nav-link ${myLeaguesTab}`}
+                  aria-current="page"
+                  name="myLeaguesTab"
+                  onClick={(e) => handleActive(e)}
+                >
+                  <h5>My Leagues</h5>
+                </button>
+              </li>
+              <li className="nav-item">
+                <button
+                  className={`nav-link ${createTab}`}
+                  aria-current="page"
+                  name="createTab"
+                  onClick={(e) => handleActive(e)}
+                >
+                  <h5>Create a League</h5>
+                </button>
+              </li>
+              <li className="nav-item">
+                <button
+                  className={`nav-link ${joinTab}`}
+                  aria-current="page"
+                  name="joinTab"
+                  onClick={(e) => handleActive(e)}
+                >
+                  <h5>Join a League</h5>
+                </button>
+              </li>
+            </ul>
+          </DashNavDesktop>
 
-          {leagueList.length >= 1 ? (
-            leagueList
-          ) : (
-            <Row>
-              <P size="lead">You have not joined any leagues.</P>
-            </Row>
-          )}
+          {/* Dashboard Mobile Nav Bar view */}
+          <DashNavMobile>
+            <div class="btn-group mb-3">
+              <button
+                class="btn no-focus dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <h5 className="fw-bold">
+                  {myLeaguesTab === "active"
+                    ? "My Leagues"
+                    : createTab === "active"
+                    ? "Create a League"
+                    : joinTab === "active"
+                    ? "Join a League"
+                    : "Choose an option"}{" "}
+                  <FontAwesomeIcon icon={faCaretDown} />
+                </h5>
+              </button>
+
+              <ul class="dropdown-menu ps-1">
+                <li className="nav-item">
+                  <a
+                    href="#"
+                    className={`nav-link ${myLeaguesTab}`}
+                    aria-current="page"
+                    name="myLeaguesTab"
+                    onClick={(e) => handleActive(e)}
+                  >
+                    <span>My Leagues</span>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    href="#"
+                    className={`nav-link ${createTab}`}
+                    aria-current="page"
+                    name="createTab"
+                    onClick={(e) => handleActive(e)}
+                  >
+                    <span>Create a League</span>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    href="#"
+                    className={`nav-link ${joinTab}`}
+                    aria-current="page"
+                    name="joinTab"
+                    onClick={(e) => handleActive(e)}
+                  >
+                    <span>Join a League</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </DashNavMobile>
+
+          {/* Dashboard Content */}
+          <div className="tab-content" id="nav-tabContent">
+            <div
+              className={`tab-pane fade show ${myLeaguesTab}`}
+              id="leagues"
+              role="tabpanel"
+              aria-labelledby="nav-home-tab"
+            >
+              {leagueList.length >= 1 ? (
+                leagueList
+              ) : (
+                <div className="row">
+                  <p className="lead">You have not joined any leagues.</p>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="tab-content" id="nav-tabContent">
+            <div
+              className={`tab-pane fade show ${createTab}`}
+              id="create"
+              role="tabpanel"
+              aria-labelledby="nav-home-tab"
+            >
+              <CreateLeague />
+            </div>
+          </div>
+          <div className="tab-content" id="nav-tabContent">
+            <div
+              className={`tab-pane fade show ${joinTab}`}
+              id="join"
+              role="tabpanel"
+              aria-labelledby="nav-home-tab"
+            >
+              <JoinLeague />
+            </div>
+          </div>
         </Fragment>
       ) : (
-        <CreateProfile />
+        <Fragment>
+          {/* If there is no profile, send user to create a profile page */}
+          <CreateProfile />
+        </Fragment>
       )}
-    </div>
+    </Container>
   );
 };
 

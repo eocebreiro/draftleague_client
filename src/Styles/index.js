@@ -1,6 +1,12 @@
 import styled from "styled-components";
 import showcase from "../img/showcase.jpg";
 
+/***** Global Sytles *****/
+
+export const Container = styled.div`
+  padding-top: 5rem;
+`;
+
 /***** Register Login and Landing Sytles *****/
 
 export const LandingImg = styled.div`
@@ -35,4 +41,20 @@ export const LandingContainer = styled.div`
 
 export const AuthFormContainer = styled(LandingContainer)`
   max-width: 500px;
+`;
+
+/***** Dashboard Sytles *****/
+
+export const DashNavDesktop = styled.div`
+  display: block;
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+`;
+
+export const DashNavMobile = styled.div`
+  display: none;
+  @media screen and (max-width: 767px) {
+    display: block;
+  }
 `;

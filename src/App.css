@@ -1,14 +1,26 @@
-.container-custom {
+.container {
   padding-top: 5rem;
   padding-bottom: 5rem;
-  min-height: 100vh;
-  background: transparent;
 }
-
-/* Landing CSS */
 
 /* Login and Register Page */
 
 .invalid-feedback {
   text-align: left;
+}
+
+/* Dashboard Page */
+
+.no-focus:focus,
+.no-focus {
+  border: none;
+}
+
+a.nav-link.active {
+  color: red;
+  font-weight: 700;
+}
+
+.dropdown-toggle::after {
+  content: none;
 }
