@@ -46,14 +46,14 @@ export const FormContainer = styled.div`
 
 /***** Dashboard Sytles *****/
 
-export const DashNavDesktop = styled.div`
+export const DesktopView = styled.div`
   display: block;
   @media screen and (max-width: 767px) {
     display: none;
   }
 `;
 
-export const DashNavMobile = styled.div`
+export const MobileView = styled.div`
   display: none;
   @media screen and (max-width: 767px) {
     display: block;
@@ -64,6 +64,9 @@ export const DashNavMobile = styled.div`
 
 export const TabContainer = styled.div`
   padding-top: 2rem;
+  @media screen and (max-width: 767px) {
+    padding-top: 0rem;
+  }
 `;
 
 /***** Form Sytles *****/

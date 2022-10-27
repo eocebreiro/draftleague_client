@@ -8,31 +8,20 @@ import { getLeagues } from "../state/leagues/leaguesActions";
 import { getFixtures } from "../state/fixtures/fixturesActions";
 
 // Style
-import {
-  Container,
-  TabContainer,
-  DashNavDesktop,
-  DashNavMobile,
-} from "../Styles";
+import { Container, TabContainer, DesktopView, MobileView } from "../Styles";
 
 //Font Awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCaretDown,
-  faUser,
-  faPlus,
-  faCircleUser,
-  faFilePen,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
-// Components
+// Containers
+import MyLeagues from "../containers/MyLeagues";
 import JoinLeague from "../containers/JoinLeague";
 import CreateLeague from "../containers/CreateLeague";
+
+// Old Componentsd
 import CreateProfile from "../pages/CreateProfile";
 import Spinner from "../components/Spinner";
-
-// local components
-import League from "../pages/Dashboard/League";
 
 const Dashboard = ({
   getCurrentProfile,
@@ -58,7 +47,7 @@ const Dashboard = ({
   let leagueList = [];
   if (leagues !== null) {
     for (let i = 0; i < leagues.length; i++) {
-      leagueList.push(<League league={leagues[i]} />);
+      leagueList.push(<MyLeagues league={leagues[i]} />);
     }
   }
 
@@ -88,7 +77,7 @@ const Dashboard = ({
       {profile !== null ? (
         <Fragment>
           {/* Dashboard Desktop Nav Bar view */}
-          <DashNavDesktop>
+          <DesktopView>
             <ul className="nav nav-pills nav-fill mb-3" role="tablist">
               <li className="nav-item">
                 <button
@@ -121,10 +110,10 @@ const Dashboard = ({
                 </button>
               </li>
             </ul>
-          </DashNavDesktop>
+          </DesktopView>
 
           {/* Dashboard Mobile Nav Bar view */}
-          <DashNavMobile>
+          <MobileView>
             <div class="btn-group mb-3">
               <button
                 class="btn no-focus dropdown-toggle"
@@ -180,7 +169,7 @@ const Dashboard = ({
                 </li>
               </ul>
             </div>
-          </DashNavMobile>
+          </MobileView>
 
           {/* Dashboard Content */}
           <TabContainer>
