@@ -7,7 +7,12 @@ import { connect } from "react-redux";
 import { register } from "../state/auth/authActions";
 
 // Styles
-import { AuthFormContainer, DarkOverlay, LandingImg } from "../Styles";
+import {
+  FormContainer,
+  DarkOverlay,
+  LandingImg,
+  LandingContainer,
+} from "../Styles";
 
 // Font Awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -89,91 +94,93 @@ const index = ({ register, isAuthenticated }) => {
   return (
     <LandingImg>
       <DarkOverlay>
-        <AuthFormContainer>
-          <div className="text-center">
-            <h1 className="display-4 mb-3">Sign Up</h1>
-            <p>
-              <FontAwesomeIcon icon={faUser} /> Create Your Account
-            </p>
-            <form align="center">
-              <div className="mb-3">
-                <input
-                  className={`form-control ${nameFeedback}`}
-                  type="text"
-                  placeholder="Name"
-                  name="name"
-                  value={name}
-                  onChange={(e) => onChange(e)}
-                  required
-                  autoComplete="on"
-                  noValidate
-                />
-                <div className="invalid-feedback">
-                  *Name must be at least 4 and 30 characters
+        <LandingContainer className="d-flex justify-content-center">
+          <FormContainer>
+            <div className="text-center">
+              <h1 className="display-4 mb-3">Sign Up</h1>
+              <p>
+                <FontAwesomeIcon icon={faUser} /> Create Your Account
+              </p>
+              <form align="center">
+                <div className="mb-3">
+                  <input
+                    className={`form-control ${nameFeedback}`}
+                    type="text"
+                    placeholder="Name"
+                    name="name"
+                    value={name}
+                    onChange={(e) => onChange(e)}
+                    required
+                    autoComplete="on"
+                    noValidate
+                  />
+                  <div className="invalid-feedback">
+                    *Name must be at least 4 and 30 characters
+                  </div>
                 </div>
-              </div>
-              <div className="mb-3">
-                <input
-                  className={`form-control ${emailFeedback}`}
-                  type="email"
-                  placeholder="Email Address"
-                  name="email"
-                  value={email}
-                  onChange={(e) => onChange(e)}
-                  required
-                  autoComplete="on"
-                  noValidate
-                />
-                <div className="invalid-feedback">*Email is invalid</div>
-              </div>
-              <div className="mb-3">
-                <input
-                  className={`form-control ${passwordFeedback}`}
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => onChange(e)}
-                  minLength="6"
-                  autoComplete="new-password"
-                  noValidate
-                />
-                <div className="invalid-feedback">
-                  *Password must be at least 6 and 30 characters
+                <div className="mb-3">
+                  <input
+                    className={`form-control ${emailFeedback}`}
+                    type="email"
+                    placeholder="Email Address"
+                    name="email"
+                    value={email}
+                    onChange={(e) => onChange(e)}
+                    required
+                    autoComplete="on"
+                    noValidate
+                  />
+                  <div className="invalid-feedback">*Email is invalid</div>
                 </div>
-              </div>
-              <div className="mb-3">
-                <input
-                  className={`form-control ${password2Feedback}`}
-                  type="password"
-                  placeholder="Confirm Password"
-                  name="password2"
-                  value={password2}
-                  onChange={(e) => onChange(e)}
-                  minLength="6"
-                  autoComplete="new-password"
-                  noValidate
-                />
-                <div className="invalid-feedback">*Password must match</div>
-              </div>
-              <div className="d-grid mb-3">
-                <button
-                  className="btn btn-primary"
-                  onClick={(e) => onSubmit(e)}
-                  type="submit"
-                  link="/register"
-                  color="primary"
-                  width="100%"
-                >
-                  Submit
-                </button>
-              </div>
-            </form>
-            <p>
-              Already have an account? <Link to="/login">Sign In</Link>
-            </p>
-          </div>
-        </AuthFormContainer>
+                <div className="mb-3">
+                  <input
+                    className={`form-control ${passwordFeedback}`}
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    value={password}
+                    onChange={(e) => onChange(e)}
+                    minLength="6"
+                    autoComplete="new-password"
+                    noValidate
+                  />
+                  <div className="invalid-feedback">
+                    *Password must be at least 6 and 30 characters
+                  </div>
+                </div>
+                <div className="mb-3">
+                  <input
+                    className={`form-control ${password2Feedback}`}
+                    type="password"
+                    placeholder="Confirm Password"
+                    name="password2"
+                    value={password2}
+                    onChange={(e) => onChange(e)}
+                    minLength="6"
+                    autoComplete="new-password"
+                    noValidate
+                  />
+                  <div className="invalid-feedback">*Password must match</div>
+                </div>
+                <div className="d-grid mb-3">
+                  <button
+                    className="btn btn-primary"
+                    onClick={(e) => onSubmit(e)}
+                    type="submit"
+                    link="/register"
+                    color="primary"
+                    width="100%"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </form>
+              <p>
+                Already have an account? <Link to="/login">Sign In</Link>
+              </p>
+            </div>
+          </FormContainer>
+        </LandingContainer>
       </DarkOverlay>
     </LandingImg>
   );

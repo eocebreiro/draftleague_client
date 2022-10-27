@@ -39,7 +39,8 @@ export const LandingContainer = styled.div`
   padding-left: 2.5rem;
 `;
 
-export const AuthFormContainer = styled(LandingContainer)`
+export const FormContainer = styled.div`
+  width: 100%;
   max-width: 500px;
 `;
 
@@ -57,4 +58,16 @@ export const DashNavMobile = styled.div`
   @media screen and (max-width: 767px) {
     display: block;
   }
+`;
+
+/***** Tab Sytles *****/
+
+export const TabContainer = styled.div`
+  padding-top: 2rem;
+`;
+
+/***** Form Sytles *****/
+
+export const FormWrapper = styled.div`
+  max-width: 500px;
 `;

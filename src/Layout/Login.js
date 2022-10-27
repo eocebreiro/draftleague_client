@@ -7,7 +7,12 @@ import { connect } from "react-redux";
 import { login } from "../state/auth/authActions";
 
 // Styles
-import { AuthFormContainer, DarkOverlay, LandingImg } from "../Styles";
+import {
+  FormContainer,
+  DarkOverlay,
+  LandingImg,
+  LandingContainer,
+} from "../Styles";
 
 //Font Awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -65,60 +70,62 @@ const Login = ({ login, isAuthenticated }) => {
   return (
     <LandingImg>
       <DarkOverlay>
-        <AuthFormContainer>
-          <div className="text-center">
-            <h1 className="display-4 mb-3">Sign In</h1>
-            <p className="lead">
-              <FontAwesomeIcon icon={faUser} /> Sign into Your Account
-            </p>
-            {invalidAuth && (
-              <div
-                className="alert alert-danger mt-3 text-center fw-bold"
-                role="alert"
-              >
-                Invalid Credentials
-              </div>
-            )}
-            <form align="center">
-              <input
-                className="form-control mb-3"
-                type="email"
-                name="email"
-                placeholder="Email Address"
-                value={email}
-                onChange={(e) => onChange(e)}
-                required
-                autoComplete="on"
-                noValidate
-                error={isEmailMissing}
-              />
-              <input
-                className="form-control mb-3"
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => onChange(e)}
-                minLength="6"
-                autoComplete="current-password"
-                noValidate
-                error={isPasswordMissing}
-              />
-              <div className="d-grid mb-3">
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  onClick={(e) => onSubmit(e)}
+        <LandingContainer className="d-flex justify-content-center">
+          <FormContainer>
+            <div className="text-center">
+              <h1 className="display-4 mb-3">Sign In</h1>
+              <p className="lead">
+                <FontAwesomeIcon icon={faUser} /> Sign into Your Account
+              </p>
+              {invalidAuth && (
+                <div
+                  className="alert alert-danger mt-3 text-center fw-bold"
+                  role="alert"
                 >
-                  Submit
-                </button>
-              </div>
-            </form>
-            <p>
-              Don't have an account? <Link to="/register">Sign Up</Link>
-            </p>
-          </div>
-        </AuthFormContainer>
+                  Invalid Credentials
+                </div>
+              )}
+              <form align="center">
+                <input
+                  className="form-control mb-3"
+                  type="email"
+                  name="email"
+                  placeholder="Email Address"
+                  value={email}
+                  onChange={(e) => onChange(e)}
+                  required
+                  autoComplete="on"
+                  noValidate
+                  error={isEmailMissing}
+                />
+                <input
+                  className="form-control mb-3"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => onChange(e)}
+                  minLength="6"
+                  autoComplete="current-password"
+                  noValidate
+                  error={isPasswordMissing}
+                />
+                <div className="d-grid mb-3">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    onClick={(e) => onSubmit(e)}
+                  >
+                    Submit
+                  </button>
+                </div>
+              </form>
+              <p>
+                Don't have an account? <Link to="/register">Sign Up</Link>
+              </p>
+            </div>
+          </FormContainer>
+        </LandingContainer>
       </DarkOverlay>
     </LandingImg>
   );

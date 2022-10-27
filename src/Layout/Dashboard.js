@@ -3,12 +3,17 @@ import PropTypes from "prop-types";
 
 // Redux
 import { connect } from "react-redux";
-import { getCurrentProfile } from "../../state/profile/profileActions";
-import { getLeagues } from "../../state/leagues/leaguesActions";
-import { getFixtures } from "../../state/fixtures/fixturesActions";
+import { getCurrentProfile } from "../state/profile/profileActions";
+import { getLeagues } from "../state/leagues/leaguesActions";
+import { getFixtures } from "../state/fixtures/fixturesActions";
 
 // Style
-import { Container, DashNavDesktop, DashNavMobile } from "../../Styles";
+import {
+  Container,
+  TabContainer,
+  DashNavDesktop,
+  DashNavMobile,
+} from "../Styles";
 
 //Font Awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,15 +26,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // Components
-import JoinLeague from "../JoinLeague";
-import CreateLeague from "../CreateLeague";
-import CreateProfile from "../CreateProfile";
-import Spinner from "../../components/Spinner";
+import JoinLeague from "../containers/JoinLeague";
+import CreateLeague from "../containers/CreateLeague";
+import CreateProfile from "../pages/CreateProfile";
+import Spinner from "../components/Spinner";
 
 // local components
-import League from "./League";
+import League from "../pages/Dashboard/League";
 
-const index = ({
+const Dashboard = ({
   getCurrentProfile,
   getLeagues,
   getFixtures,
@@ -178,42 +183,44 @@ const index = ({
           </DashNavMobile>
 
           {/* Dashboard Content */}
-          <div className="tab-content" id="nav-tabContent">
-            <div
-              className={`tab-pane fade show ${myLeaguesTab}`}
-              id="leagues"
-              role="tabpanel"
-              aria-labelledby="nav-home-tab"
-            >
-              {leagueList.length >= 1 ? (
-                leagueList
-              ) : (
-                <div className="row">
-                  <p className="lead">You have not joined any leagues.</p>
-                </div>
-              )}
+          <TabContainer>
+            <div className="tab-content" id="nav-tabContent">
+              <div
+                className={`tab-pane fade show ${myLeaguesTab}`}
+                id="leagues"
+                role="tabpanel"
+                aria-labelledby="nav-home-tab"
+              >
+                {leagueList.length >= 1 ? (
+                  leagueList
+                ) : (
+                  <div className="row">
+                    <p className="lead">You have not joined any leagues.</p>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-          <div className="tab-content" id="nav-tabContent">
-            <div
-              className={`tab-pane fade show ${createTab}`}
-              id="create"
-              role="tabpanel"
-              aria-labelledby="nav-home-tab"
-            >
-              <CreateLeague />
+            <div className="tab-content" id="nav-tabContent">
+              <div
+                className={`tab-pane fade show ${createTab}`}
+                id="create"
+                role="tabpanel"
+                aria-labelledby="nav-home-tab"
+              >
+                <CreateLeague />
+              </div>
             </div>
-          </div>
-          <div className="tab-content" id="nav-tabContent">
-            <div
-              className={`tab-pane fade show ${joinTab}`}
-              id="join"
-              role="tabpanel"
-              aria-labelledby="nav-home-tab"
-            >
-              <JoinLeague />
+            <div className="tab-content" id="nav-tabContent">
+              <div
+                className={`tab-pane fade show ${joinTab}`}
+                id="join"
+                role="tabpanel"
+                aria-labelledby="nav-home-tab"
+              >
+                <JoinLeague />
+              </div>
             </div>
-          </div>
+          </TabContainer>
         </Fragment>
       ) : (
         <Fragment>
@@ -225,7 +232,7 @@ const index = ({
   );
 };
 
-index.propTypes = {
+Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   getLeagues: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
@@ -244,4 +251,4 @@ export default connect(mapStateToProps, {
   getCurrentProfile,
   getLeagues,
   getFixtures,
-})(index);
+})(Dashboard);
